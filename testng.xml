@@ -1,0 +1,8 @@
+
+<suite name="API Test Suite" parallel="tests" thread-count="3">
+    <test name="API Tests">
+        <packages>
+            <package name="tests"/>
+        </packages>
+    </test>
+</suite>
