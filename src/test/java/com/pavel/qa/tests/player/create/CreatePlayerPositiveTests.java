@@ -20,8 +20,8 @@ public class CreatePlayerPositiveTests extends BaseTest {
         String screenName = "ValidPlayer";
         String password = TestDataGenerator.generateValidPassword();
         String role = "user";
-        String gender = "male";
-        String age = "30";
+        String gender = TestDataGenerator.getRandomGender();
+        String age = TestDataGenerator.generateValidAge();
 
         Response response = sendCreatePlayerRequest(editor, age, gender, login, password, role, screenName);
         attachResponse(response);
