@@ -22,7 +22,7 @@ public class TestDataGenerator {
      * Generates unique screenName name.
      */
     public static String generateUniqueScreenName() {
-        return "Ok ScreenName" + ThreadLocalRandom.current().nextInt(1000, 9999);
+        return "OkScreenName" + ThreadLocalRandom.current().nextInt(1000, 9999);
     }
 
     /**
