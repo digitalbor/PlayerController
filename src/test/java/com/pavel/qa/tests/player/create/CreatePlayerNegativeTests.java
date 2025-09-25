@@ -14,7 +14,7 @@ public class CreatePlayerNegativeTests extends BaseTest {
 
     @Test(description = "Attempt to create player with age < 16 should return 400 BAD_REQUEST")
     public void createUserWithTooYoungAge_ShouldReturnBadRequest() {
-        String editor = "admin";
+        String editor = "supervisor";
         String login = "youngUser123";
         String screenName = "YoungPlayer";
         String password = "abc1234";

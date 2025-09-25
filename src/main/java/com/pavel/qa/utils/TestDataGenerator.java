@@ -19,17 +19,17 @@ public class TestDataGenerator {
     }
 
     /**
-     * Generates unique player's name.
+     * Generates unique screenName name.
      */
     public static String generateUniqueScreenName() {
-        return "Player_" + ThreadLocalRandom.current().nextInt(1000, 9999);
+        return "Ok ScreenName" + ThreadLocalRandom.current().nextInt(1000, 9999);
     }
 
     /**
      * Generates valid password.
      */
     public static String generateValidPassword() {
-        return "OKpass" + ThreadLocalRandom.current().nextInt(1, 999999999);
+        return "OkPass" + ThreadLocalRandom.current().nextInt(1, 999999999);
     }
 
     /**
