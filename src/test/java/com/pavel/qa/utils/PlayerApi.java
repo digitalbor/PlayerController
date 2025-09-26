@@ -35,4 +35,15 @@ public class PlayerApi {
                 .delete("/player/delete/" + editor);
     }
 
+
+    public static Response sendGetPlayerRequest(String playerId) {
+        String jsonBody = "{ \"playerId\": \"" + playerId + "\" }";
+
+        return RestAssured
+                .given()
+                .header("accept", "*/*")
+                .header("Content-Type", "application/json")
+                .body(jsonBody)
+                .post("/player/get");
+    }
 }
