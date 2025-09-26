@@ -5,6 +5,9 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.asserts.SoftAssert;
 
+import java.util.List;
+import java.util.Map;
+
 public class CommonAssertions {
 
     //Validate and Delete response JSON structures are the same
@@ -33,7 +36,6 @@ public class CommonAssertions {
         softAssert.assertAll();
     }
 
-
     public static void validateDeleteUserJsonStructure(Response response) {
         Allure.step("Step 4: Validate JSON structure of delete response");
 
@@ -51,20 +53,20 @@ public class CommonAssertions {
 
         JsonPath json = response.jsonPath();
         SoftAssert softAssert = new SoftAssert();
+        List<Map<String, Object>> players = json.getList("players");
 
-        softAssert.assertNotNull(json.getList("players"), "'players' list should not be null");
 
-        if (json.getList("players").size() > 0) {
-            Object firstPlayer = json.getList("players").get(0);
-            JsonPath playerJson = JsonPath.from(firstPlayer.toString());
+        softAssert.assertNotNull(players, "'players' list should not be null");
+        softAssert.assertTrue(!players.isEmpty(), "'players' list should not be empty");
 
-            softAssert.assertNotNull(playerJson.get("age"), "Player should have 'age'");
-            softAssert.assertNotNull(playerJson.get("gender"), "Player should have 'gender'");
-            softAssert.assertNotNull(playerJson.get("id"), "Player should have 'id'");
-            softAssert.assertNotNull(playerJson.get("role"), "Player should have 'role'");
-            softAssert.assertNotNull(playerJson.get("screenName"), "Player should have 'screenName'");
+        Map<String, Object> firstPlayer = players.get(0);
+        softAssert.assertTrue(firstPlayer.containsKey("id"), "Missing 'id'");
+        softAssert.assertTrue(firstPlayer.containsKey("screenName"), "Missing 'screenName'");
+        softAssert.assertTrue(firstPlayer.containsKey("gender"), "Missing 'gender'");
+        softAssert.assertTrue(firstPlayer.containsKey("age"), "Missing 'age'");
+        softAssert.assertTrue(firstPlayer.containsKey("role"), "Missing 'role'");
 
-            softAssert.assertAll();
-        }
+        softAssert.assertAll();
+
     }
 }
