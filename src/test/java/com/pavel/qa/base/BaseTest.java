@@ -1,9 +1,7 @@
 package com.pavel.qa.base;
 
-import io.qameta.allure.testng.AllureTestNg;
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -7,7 +7,7 @@ import org.testng.asserts.SoftAssert;
 
 public class CommonAssertions {
 
-
+    //Validate and Delete response JSON structures are the same
     public static void validateCreateUserJsonStructure(Response response) {
         Allure.step("Step 5: Validate JSON response structure");
 

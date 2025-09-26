@@ -1,7 +1,6 @@
 package com.pavel.qa.tests.player.delete;
 
 import com.pavel.qa.base.BaseTest;
-import com.pavel.qa.utils.CommonAssertions;
 import com.pavel.qa.utils.PlayerApi;
 import com.pavel.qa.utils.TestDataGenerator;
 import io.qameta.allure.Allure;

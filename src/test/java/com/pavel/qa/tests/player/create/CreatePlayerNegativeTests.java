@@ -40,13 +40,6 @@ public class CreatePlayerNegativeTests extends BaseTest {
     }
 
 
-
-    @Attachment(value = "Response Body", type = "text/plain")
-    private String attachResponse(Response response) {
-        return response.asString();
-    }
-
-
     @Test(description = "Attempt to create player with invalid gender should return 400 BAD_REQUEST")
     @Story("Negative Test - Gender Validation")
     @Severity(SeverityLevel.NORMAL)
