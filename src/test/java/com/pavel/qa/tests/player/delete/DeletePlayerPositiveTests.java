@@ -46,7 +46,7 @@ public class DeletePlayerPositiveTests extends BaseTest {
         Allure.step("Step 4: Verify the user does not exist anymore");
         Response getResponse = PlayerApi.sendGetPlayerRequest(playerId);
         Allure.addAttachment("Get Player Response", "text/plain", getResponse.asString());
-        Assert.assertEquals(deleteResponse.statusCode(), 404, "Expected 404 OK for deleted user");
+        Assert.assertEquals(deleteResponse.statusCode(), 404, "Expected 404 NOT_FOUND for deleted user");
     }
 
     @Test(description = "Delete user successfully by admin")
@@ -79,7 +79,7 @@ public class DeletePlayerPositiveTests extends BaseTest {
         Allure.step("Step 4: Verify the user does not exist anymore");
         Response getResponse = PlayerApi.sendGetPlayerRequest(playerId);
         Allure.addAttachment("Get Player Response", "text/plain", getResponse.asString());
-        Assert.assertEquals(deleteResponse.statusCode(), 404, "Expected 404 OK for deleted user");
+        Assert.assertEquals(deleteResponse.statusCode(), 404, "Expected 404 NOT_FOUND for deleted user");
     }
 }
 
