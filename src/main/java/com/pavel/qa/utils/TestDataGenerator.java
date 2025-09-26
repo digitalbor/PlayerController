@@ -1,5 +1,6 @@
 package com.pavel.qa.utils;
 
+
 import java.util.concurrent.ThreadLocalRandom;
 
 public class TestDataGenerator {
