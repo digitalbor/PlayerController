@@ -3,7 +3,6 @@ package com.pavel.qa.utils;
 import io.qameta.allure.Allure;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 public class CommonAssertions {
@@ -30,6 +29,19 @@ public class CommonAssertions {
         softAssert.assertTrue(json.get("password") instanceof String, "password should be a string");
         softAssert.assertTrue(json.get("role") instanceof String, "role should be a string");
         softAssert.assertTrue(json.get("screenName") instanceof String, "screenName should be a string");
+
+        softAssert.assertAll();
+    }
+
+
+    public static void validateDeleteUserJsonStructure(Response response) {
+        Allure.step("Step 4: Validate JSON structure of delete response");
+
+        JsonPath json = response.jsonPath();
+        SoftAssert softAssert = new SoftAssert();
+
+        softAssert.assertNotNull(json.get("message"), "Response should contain 'message'");
+        softAssert.assertTrue(json.get("message") instanceof String, "'message' should be a string");
 
         softAssert.assertAll();
     }
