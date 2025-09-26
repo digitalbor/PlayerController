@@ -1,5 +1,6 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="API Test Suite" parallel="tests" thread-count="3">
+
     <test name="API Tests">
         <packages>
             <package name="com.pavel.qa.tests.player.create"/>
