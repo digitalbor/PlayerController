@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 @Epic("PlayerController")
 @Feature("Get Player")
 @Tag("negative")
-public class GetPlayerNegativeTests extends BaseTest {
+public class GetPlayerByIdNegativeTests extends BaseTest {
 
     @Test(description = "Attempt to get player with invalid userId should return 404/404/403")
     @Description("Verify that request with invalid playerId returns error")

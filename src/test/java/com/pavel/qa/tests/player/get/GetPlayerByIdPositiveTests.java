@@ -14,7 +14,7 @@ import org.testng.annotations.Test;
 @Epic("PlayerController")
 @Feature("Get Player")
 @Tag("positive")
-public class GetPlayerPositiveTests extends BaseTest {
+public class GetPlayerByIdPositiveTests extends BaseTest {
 
     @Test(description = "Get player by valid playerId")
     @Description("Verify that a valid player can be retrieved by playerId")
