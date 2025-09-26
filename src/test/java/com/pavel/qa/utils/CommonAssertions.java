@@ -46,4 +46,25 @@ public class CommonAssertions {
         softAssert.assertAll();
     }
 
+    public static void validateGetAllJsonStructure(Response response) {
+        Allure.step("Step 4: Validate JSON structure of get all response");
+
+        JsonPath json = response.jsonPath();
+        SoftAssert softAssert = new SoftAssert();
+
+        softAssert.assertNotNull(json.getList("players"), "'players' list should not be null");
+
+        if (json.getList("players").size() > 0) {
+            Object firstPlayer = json.getList("players").get(0);
+            JsonPath playerJson = JsonPath.from(firstPlayer.toString());
+
+            softAssert.assertNotNull(playerJson.get("age"), "Player should have 'age'");
+            softAssert.assertNotNull(playerJson.get("gender"), "Player should have 'gender'");
+            softAssert.assertNotNull(playerJson.get("id"), "Player should have 'id'");
+            softAssert.assertNotNull(playerJson.get("role"), "Player should have 'role'");
+            softAssert.assertNotNull(playerJson.get("screenName"), "Player should have 'screenName'");
+
+            softAssert.assertAll();
+        }
+    }
 }

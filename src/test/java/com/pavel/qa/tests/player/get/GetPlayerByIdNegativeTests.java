@@ -18,14 +18,14 @@ public class GetPlayerByIdNegativeTests extends BaseTest {
     @DataProvider(name = "invalidPlayerId")
     public Object[][] invalidPlayerId() {
         return new Object[][] {
-                {""},                    // пустая строка
-                {" "},                   // пробел
-                {"null"},                // строка "null"
-                {"!@#$%^&*()"},          // спецсимволы
-                {"999999999999"},        // несуществующий ID
-                {"abc123"},              // строка с буквами
-                {"-1"},                  // отрицательное число
-                {"0"}                    // ноль
+                {""},                    // empty string
+                {" "},                   // space
+                {"null"},                // "null"
+                {"!@#$%^&*()"},          // special characters
+                {"999999999999G"},       // not existing ID
+                {"abc123"},              // random string + letters
+                {"-1"},                  // negative value
+                {"0"}                    // zero
         };
     }
 
