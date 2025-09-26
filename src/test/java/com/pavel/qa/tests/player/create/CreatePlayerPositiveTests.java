@@ -2,12 +2,11 @@ package com.pavel.qa.tests.player.create;
 
 import com.pavel.qa.base.BaseTest;
 import com.pavel.qa.utils.CommonAssertions;
+import com.pavel.qa.utils.PlayerApi;
 import com.pavel.qa.utils.TestDataGenerator;
 import io.qameta.allure.Allure;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
-import io.restassured.RestAssured;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -41,7 +40,7 @@ public class CreatePlayerPositiveTests extends BaseTest {
         String age = TestDataGenerator.generateValidAge();
 
         Allure.step("Step 2: Send create player request");
-        Response response = sendCreatePlayerRequest(editor, age, gender, login, password, role, screenName);
+        Response response = PlayerApi.sendCreatePlayerRequest(editor, age, gender, login, password, role, screenName);
 
         Allure.step("Step 3: Attach response to report");
         Allure.addAttachment("Create Player Response", "text/plain", response.asString());
@@ -69,7 +68,7 @@ public class CreatePlayerPositiveTests extends BaseTest {
         String age = "17"; // minimum valid age
 
         Allure.step("Step 2: Send create player request");
-        Response response = sendCreatePlayerRequest(editor, age, gender, login, password, role, screenName);
+        Response response = PlayerApi.sendCreatePlayerRequest(editor, age, gender, login, password, role, screenName);
 
         Allure.step("Step 3: Attach response to report");
         Allure.addAttachment("Create Player Response", "text/plain", response.asString());
@@ -96,7 +95,7 @@ public class CreatePlayerPositiveTests extends BaseTest {
         String age = "59"; // maximum valid age
 
         Allure.step("Step 2: Send create player request");
-        Response response = sendCreatePlayerRequest(editor, age, gender, login, password, role, screenName);
+        Response response = PlayerApi.sendCreatePlayerRequest(editor, age, gender, login, password, role, screenName);
 
         Allure.step("Step 3: Attach response to report");
         Allure.addAttachment("Create Player Response", "text/plain", response.asString());
@@ -109,15 +108,4 @@ public class CreatePlayerPositiveTests extends BaseTest {
         CommonAssertions.validateCreateUserJsonStructure(response);
     }
 
-    public Response sendCreatePlayerRequest(String editor, String age, String gender, String login, String password, String role, String screenName) {
-        return RestAssured
-                .given()
-                .queryParam("age", age)
-                .queryParam("gender", gender)
-                .queryParam("login", login)
-                .queryParam("password", password)
-                .queryParam("role", role)
-                .queryParam("screenName", screenName)
-                .get("/player/create/" + editor);
-    }
 }

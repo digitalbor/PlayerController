@@ -1,10 +1,10 @@
 package com.pavel.qa.tests.player.create;
 
 import com.pavel.qa.base.BaseTest;
+import com.pavel.qa.utils.PlayerApi;
 import com.pavel.qa.utils.TestDataGenerator;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -23,14 +23,14 @@ public class CreatePlayerNegativeTests extends BaseTest {
         Allure.step("Step 1: Generate test data");
         String editor = "supervisor";
         String login = TestDataGenerator.generateUniqueLogin();
-        String screenName = "YoungPlayer";
+        String screenName = TestDataGenerator.generateUniqueScreenName();
         String password = TestDataGenerator.generateValidPassword();
         String role = "user";
         String gender = TestDataGenerator.getRandomGender();
         String age = "15"; // Invalid age
 
         Allure.step("Step 2: Send create player request");
-        Response response = sendCreatePlayerRequest(editor, age, gender, login, password, role, screenName);
+        Response response = PlayerApi.sendCreatePlayerRequest(editor, age, gender, login, password, role, screenName);
 
         Allure.step("Step 3: Attach response to report");
         Allure.addAttachment("Create Player Response", "text/plain", response.asString());
@@ -53,33 +53,21 @@ public class CreatePlayerNegativeTests extends BaseTest {
     public void createUserWithInvalidGender_ShouldReturnBadRequest() {
         Allure.step("Step 1: Generate test data");
         String editor = "supervisor";
-        String login = "invalidGenderUser";
-        String screenName = "InvalidGenderPlayer";
-        String password = "abc1234";
+        String login = TestDataGenerator.generateUniqueLogin();
+        String screenName = TestDataGenerator.generateUniqueScreenName();
+        String password = TestDataGenerator.generateValidPassword();
         String role = "user";
         String gender = "unknown"; // Invalid gender
         String age = "25";
 
         Allure.step("Step 2: Send create player request");
-        Response response = sendCreatePlayerRequest(editor, age, gender, login, password, role, screenName);
+        Response response = PlayerApi.sendCreatePlayerRequest(editor, age, gender, login, password, role, screenName);
 
         Allure.step("Step 3: Attach response to report");
         Allure.addAttachment("Create Player Response", "text/plain", response.asString());
 
         Allure.step("Step 4: Validate response");
         Assert.assertEquals(response.statusCode(), 400, "Expected 400 BAD_REQUEST for invalid gender");
-    }
-
-    public Response sendCreatePlayerRequest(String editor, String age, String gender, String login, String password, String role, String screenName) {
-        return RestAssured
-                .given()
-                .queryParam("age", age)
-                .queryParam("gender", gender)
-                .queryParam("login", login)
-                .queryParam("password", password)
-                .queryParam("role", role)
-                .queryParam("screenName", screenName)
-                .get("/player/create/" + editor);
     }
 
 }
