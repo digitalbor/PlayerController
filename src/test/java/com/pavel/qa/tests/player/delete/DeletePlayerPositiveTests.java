@@ -43,7 +43,10 @@ public class DeletePlayerPositiveTests extends BaseTest {
         Allure.step("Step 3: Validate delete response");
         Assert.assertEquals(deleteResponse.statusCode(), 204, "Expected 204 OK for successful deletion with no response body");
 
-        //CommonAssertions.validateDeleteUserJsonStructure(deleteResponse);
+        Allure.step("Step 4: Verify the user does not exist anymore");
+        Response getResponse = PlayerApi.sendGetPlayerRequest(playerId);
+        Allure.addAttachment("Get Player Response", "text/plain", getResponse.asString());
+        Assert.assertEquals(deleteResponse.statusCode(), 404, "Expected 404 OK for deleted user");
     }
 
     @Test(description = "Delete user successfully by admin")
@@ -58,7 +61,7 @@ public class DeletePlayerPositiveTests extends BaseTest {
         String gender = TestDataGenerator.getRandomGender();
         String age = TestDataGenerator.generateValidAge();
         String role = "user";
-        String editor = "supervisor";
+        String editor = "admin";
 
         Response createResponse = PlayerApi.sendCreatePlayerRequest(editor, age, gender, login, password, role, screenName);
         Allure.addAttachment("Create Player Response", "text/plain", createResponse.asString());
@@ -73,7 +76,10 @@ public class DeletePlayerPositiveTests extends BaseTest {
         Allure.step("Step 3: Validate delete response");
         Assert.assertEquals(deleteResponse.statusCode(), 204, "Expected 204 OK for successful deletion");
 
-        //CommonAssertions.validateDeleteUserJsonStructure(deleteResponse);
+        Allure.step("Step 4: Verify the user does not exist anymore");
+        Response getResponse = PlayerApi.sendGetPlayerRequest(playerId);
+        Allure.addAttachment("Get Player Response", "text/plain", getResponse.asString());
+        Assert.assertEquals(deleteResponse.statusCode(), 404, "Expected 404 OK for deleted user");
     }
 }
 
