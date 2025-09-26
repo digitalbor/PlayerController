@@ -5,6 +5,7 @@
         <packages>
             <package name="com.pavel.qa.tests.player.create"/>
             <package name="com.pavel.qa.tests.player.delete"/>
+            <package name="com.pavel.qa.tests.player.get"/>
         </packages>
     </test>
 </suite>
