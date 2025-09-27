@@ -32,9 +32,7 @@ public class CreatePlayerNegativeTests extends BaseTest {
 
         Allure.step("Step 2: Send create player request");
         Response response = PlayerApi.sendCreatePlayerRequest(model);
-        Allure.addAttachment("Create Player Response Code", "text/plain", String.valueOf(response.statusCode()));
-        Allure.addAttachment("Create Player Response Headers", "text/plain", response.getHeaders().toString());
-        Allure.addAttachment("Create Player Response", "text/plain", response.asString());
+        Allure.addAttachment("Create Player Full Response", "text/plain", response.statusCode() + "\n" + response.getHeaders().toString() + "\n" + response.asString());
 
         Allure.step("Step 3: Validate response");
         Assert.assertEquals(response.statusCode(), 400, "Expected 400 BAD_REQUEST for age < 16");
@@ -56,9 +54,7 @@ public class CreatePlayerNegativeTests extends BaseTest {
 
         Allure.step("Step 2: Send create player request");
         Response response = PlayerApi.sendCreatePlayerRequest(model);
-        Allure.addAttachment("Create Player Response Code", "text/plain", String.valueOf(response.statusCode()));
-        Allure.addAttachment("Create Player Response Headers", "text/plain", response.getHeaders().toString());
-        Allure.addAttachment("Create Player Response", "text/plain", response.asString());
+        Allure.addAttachment("Create Player Full Response", "text/plain", response.statusCode() + "\n" + response.getHeaders().toString() + "\n" + response.asString());
 
         Allure.step("Step 3: Validate response");
         Assert.assertEquals(response.statusCode(), 400, "Expected 400 BAD_REQUEST for invalid gender");

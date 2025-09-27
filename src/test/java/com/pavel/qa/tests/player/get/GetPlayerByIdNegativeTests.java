@@ -36,9 +36,7 @@ public class GetPlayerByIdNegativeTests extends BaseTest {
         GetPlayerByIdRequestModel requestModel = new GetPlayerByIdRequestModel();
         requestModel.setPlayerId(invalidPlayerId);
         Response response = PlayerApi.sendGetPlayerByIdRequest(requestModel.getPlayerId());
-        Allure.addAttachment("Get Player Response Code", "text/plain", String.valueOf(response.statusCode()));
-        Allure.addAttachment("Get Player Response Headers", "text/plain", response.getHeaders().toString());
-        Allure.addAttachment("Get Player Response", "application/json", response.asString());
+        Allure.addAttachment("Get Player Full Response", "text/plain", response.statusCode() + "\n" + response.getHeaders().toString() + "\n" + response.asString());
 
         Allure.step("Step 2: Validate error response");
         Assert.assertNotEquals(response.statusCode(), 200, "Expected error response for invalid playerId");

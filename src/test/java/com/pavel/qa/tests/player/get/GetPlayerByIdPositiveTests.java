@@ -31,7 +31,7 @@ public class GetPlayerByIdPositiveTests extends BaseTest {
         model.setEditor("supervisor");
 
         Response createResponse = PlayerApi.sendCreatePlayerRequest(model);
-        Allure.addAttachment("Create Player Response", "text/plain", createResponse.asString());
+        Allure.addAttachment("Create Player Full Response", "text/plain", createResponse.statusCode() + "\n" + createResponse.getHeaders().toString() + "\n" + createResponse.asString());
         Assert.assertEquals(createResponse.statusCode(), 200, "User creation failed before retrieval");
 
         Allure.step("Step 2: Retrieve player id");
@@ -41,9 +41,8 @@ public class GetPlayerByIdPositiveTests extends BaseTest {
         GetPlayerByIdRequestModel getRequest = new GetPlayerByIdRequestModel();
         getRequest.setPlayerId(playerId);
         Response getResponse = PlayerApi.sendGetPlayerByIdRequest(getRequest.getPlayerId());
-        Allure.addAttachment("Get Player Response Code", "text/plain", String.valueOf(getResponse.statusCode()));
-        Allure.addAttachment("Get Player Response Headers", "text/plain", getResponse.getHeaders().toString());
-        Allure.addAttachment("Get Player Response", "application/json", getResponse.asString());
+        Allure.addAttachment("Get Player Full Response", "text/plain", getResponse.statusCode() + "\n" + getResponse.getHeaders().toString() + "\n" + getResponse.asString());
+
 
         Allure.step("Step 4: Validate get response");
         Assert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player request");

@@ -46,9 +46,7 @@ public class CreatePlayerPositiveTests extends BaseTest {
 
         Allure.step("Step 2: Send create player request");
         Response response = PlayerApi.sendCreatePlayerRequest(model);
-        Allure.addAttachment("Create Player Response Code", "text/plain", String.valueOf(response.statusCode()));
-        Allure.addAttachment("Create Player Response Headers", "text/plain", response.getHeaders().toString());
-        Allure.addAttachment("Create Player Response", "text/plain", response.asString());
+        Allure.addAttachment("Create Player Full Response", "text/plain", response.statusCode() + "\n" + response.getHeaders().toString() + "\n" + response.asString());
 
         Allure.step("Step 3: Validate response");
         Assert.assertEquals(response.statusCode(), 200, "Expected 200 OK for valid user creation");
@@ -63,7 +61,7 @@ public class CreatePlayerPositiveTests extends BaseTest {
 
         Allure.step("Step 4: Verify player data via GET request");
         Response getResponse = PlayerApi.sendGetPlayerByIdRequest((long) responseModel.getId());
-        Allure.addAttachment("Get Player Response", "text/plain", getResponse.asString());
+        Allure.addAttachment("Get Player Full Response", "text/plain", getResponse.statusCode() + "\n" + getResponse.getHeaders().toString() + "\n" + getResponse.asString());
         Assert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player");
 
         CreatePlayerResponseModel getModel = getResponse.as(CreatePlayerResponseModel.class);
@@ -91,9 +89,7 @@ public class CreatePlayerPositiveTests extends BaseTest {
 
         Allure.step("Step 2: Send create player request");
         Response response = PlayerApi.sendCreatePlayerRequest(model);
-        Allure.addAttachment("Create Player Response Code", "text/plain", String.valueOf(response.statusCode()));
-        Allure.addAttachment("Create Player Response Headers", "text/plain", response.getHeaders().toString());
-        Allure.addAttachment("Create Player Response", "text/plain", response.asString());
+        Allure.addAttachment("Create Player Full Response", "text/plain", response.statusCode() + "\n" + response.getHeaders().toString() + "\n" + response.asString());
 
         Allure.step("Step 3: Validate response");
         Assert.assertEquals(response.statusCode(), 200, "Expected 200 OK for user with minimum valid age");
@@ -108,7 +104,7 @@ public class CreatePlayerPositiveTests extends BaseTest {
 
         Allure.step("Step 4: Verify player data via GET request");
         Response getResponse = PlayerApi.sendGetPlayerByIdRequest((long) responseModel.getId());
-        Allure.addAttachment("Get Player Response", "text/plain", getResponse.asString());
+        Allure.addAttachment("Get Player Full Response", "text/plain", getResponse.statusCode() + "\n" + getResponse.getHeaders().toString() + "\n" + getResponse.asString());
         Assert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player");
 
         CreatePlayerResponseModel getModel = getResponse.as(CreatePlayerResponseModel.class);
@@ -135,9 +131,7 @@ public class CreatePlayerPositiveTests extends BaseTest {
 
         Allure.step("Step 2: Send create player request");
         Response response = PlayerApi.sendCreatePlayerRequest(model);
-        Allure.addAttachment("Create Player Response Code", "text/plain", String.valueOf(response.statusCode()));
-        Allure.addAttachment("Create Player Response Headers", "text/plain", response.getHeaders().toString());
-        Allure.addAttachment("Create Player Response", "text/plain", response.asString());
+        Allure.addAttachment("Create Player Full Response", "text/plain", response.statusCode() + "\n" + response.getHeaders().toString() + "\n" + response.asString());
 
         Allure.step("Step 3: Validate response");
         Assert.assertEquals(response.statusCode(), 200, "Expected 200 OK for user with maximum valid age");
@@ -152,7 +146,7 @@ public class CreatePlayerPositiveTests extends BaseTest {
 
         Allure.step("Step 4: Verify player data via GET request");
         Response getResponse = PlayerApi.sendGetPlayerByIdRequest((long) responseModel.getId());
-        Allure.addAttachment("Get Player Response", "text/plain", getResponse.asString());
+        Allure.addAttachment("Get Player Full Response", "text/plain", getResponse.statusCode() + "\n" + getResponse.getHeaders().toString() + "\n" + getResponse.asString());
         Assert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player");
 
         CreatePlayerResponseModel getModel = getResponse.as(CreatePlayerResponseModel.class);
