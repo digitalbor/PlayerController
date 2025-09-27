@@ -1,9 +1,8 @@
+
 package com.pavel.qa.tests.player.get;
 
 import com.pavel.qa.base.BaseTest;
-import com.pavel.qa.utils.CommonAssertions;
-import com.pavel.qa.utils.PlayerApi;
-import com.pavel.qa.utils.TestDataGenerator;
+import com.pavel.qa.utils.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
@@ -22,15 +21,17 @@ public class GetPlayerByIdPositiveTests extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     public void getPlayerByPlayerId_PositiveTest() {
         Allure.step("Step 1: Create user to be retrieved");
-        String login = TestDataGenerator.generateUniqueLogin();
-        String screenName = TestDataGenerator.generateUniqueScreenName();
-        String password = TestDataGenerator.generateValidPassword();
-        String gender = TestDataGenerator.getRandomGender();
-        String age = TestDataGenerator.generateValidAge();
-        String role = "user";
         String editor = "supervisor";
 
-        Response createResponse = PlayerApi.sendCreatePlayerRequest(editor, age, gender, login, password, role, screenName);
+        CreatePlayerRequestModel model = new CreatePlayerRequestModel();
+        model.setLogin(TestDataGenerator.generateUniqueLogin());
+        model.setScreenName(TestDataGenerator.generateUniqueScreenName());
+        model.setPassword(TestDataGenerator.generateValidPassword());
+        model.setGender(TestDataGenerator.getRandomGender());
+        model.setAge(TestDataGenerator.generateValidAge());
+        model.setRole("user");
+
+        Response createResponse = PlayerApi.sendCreatePlayerRequest(editor, model);
         Allure.addAttachment("Create Player Response", "text/plain", createResponse.asString());
         Assert.assertEquals(createResponse.statusCode(), 200, "User creation failed before retrieval");
 
@@ -43,7 +44,10 @@ public class GetPlayerByIdPositiveTests extends BaseTest {
         Allure.step("Step 3: Validate get response");
         Assert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player request");
 
-        CommonAssertions.validateCreateUserJsonStructure(getResponse);
+        CreatePlayerResponseModel responseModel = getResponse.as(CreatePlayerResponseModel.class);
+        Assert.assertEquals(responseModel.getLogin(), model.getLogin(), "Login should match");
+        Assert.assertEquals(responseModel.getRole(), model.getRole(), "Role should match");
+
+        CommonAssertions.validateCreateUserResponse(responseModel);
     }
 }
-

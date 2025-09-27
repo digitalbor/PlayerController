@@ -2,6 +2,8 @@ package com.pavel.qa.tests.player.create;
 
 import com.pavel.qa.base.BaseTest;
 import com.pavel.qa.utils.CommonAssertions;
+import com.pavel.qa.utils.CreatePlayerRequestModel;
+import com.pavel.qa.utils.CreatePlayerResponseModel;
 import com.pavel.qa.utils.PlayerApi;
 import com.pavel.qa.utils.TestDataGenerator;
 import io.qameta.allure.Allure;
@@ -33,24 +35,28 @@ public class CreatePlayerPositiveTests extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     public void createUserWithRole_PositiveTest(String editor, String role) {
         Allure.step("Step 1: Generate test data");
-        String login = TestDataGenerator.generateUniqueLogin();
-        String screenName = TestDataGenerator.generateUniqueScreenName();
-        String password = TestDataGenerator.generateValidPassword();
-        String gender = TestDataGenerator.getRandomGender();
-        String age = TestDataGenerator.generateValidAge();
+        CreatePlayerRequestModel model = new CreatePlayerRequestModel();
+        model.setLogin(TestDataGenerator.generateUniqueLogin());
+        model.setScreenName(TestDataGenerator.generateUniqueScreenName());
+        model.setPassword(TestDataGenerator.generateValidPassword());
+        model.setGender(TestDataGenerator.getRandomGender());
+        model.setAge(TestDataGenerator.generateValidAge());
+        model.setRole(role);
 
         Allure.step("Step 2: Send create player request");
-        Response response = PlayerApi.sendCreatePlayerRequest(editor, age, gender, login, password, role, screenName);
+        Response response = PlayerApi.sendCreatePlayerRequest(editor, model);
 
         Allure.step("Step 3: Attach response to report");
         Allure.addAttachment("Create Player Response", "text/plain", response.asString());
 
         Allure.step("Step 4: Validate response");
         Assert.assertEquals(response.statusCode(), 200, "Expected 200 OK for valid user creation");
-        Assert.assertTrue(response.asString().contains(login), "Response should contain login");
-        Assert.assertTrue(response.asString().contains(role), "Response should contain role");
 
-        CommonAssertions.validateCreateUserJsonStructure(response);
+        CreatePlayerResponseModel responseModel = response.as(CreatePlayerResponseModel.class);
+        Assert.assertEquals(responseModel.getLogin(), model.getLogin(), "Login should match");
+        Assert.assertEquals(responseModel.getRole(), model.getRole(), "Role should match");
+
+        CommonAssertions.validateCreateUserResponse(responseModel);
     }
 
     @Test(description = "Create user with minimum valid age")
@@ -60,25 +66,29 @@ public class CreatePlayerPositiveTests extends BaseTest {
     public void createUserWithMinimumValidAge_PositiveTest() {
         Allure.step("Step 1: Generate test data");
         String editor = "supervisor";
-        String login = TestDataGenerator.generateUniqueLogin();
-        String screenName = "ValidPlayerMinAge";
-        String password = TestDataGenerator.generateValidPassword();
-        String role = "user";
-        String gender = TestDataGenerator.getRandomGender();
-        String age = "17"; // minimum valid age
+
+        CreatePlayerRequestModel model = new CreatePlayerRequestModel();
+        model.setLogin(TestDataGenerator.generateUniqueLogin());
+        model.setScreenName("ValidPlayerMinAge");
+        model.setPassword(TestDataGenerator.generateValidPassword());
+        model.setGender(TestDataGenerator.getRandomGender());
+        model.setAge("17"); // minimum valid age
+        model.setRole("user");
 
         Allure.step("Step 2: Send create player request");
-        Response response = PlayerApi.sendCreatePlayerRequest(editor, age, gender, login, password, role, screenName);
+        Response response = PlayerApi.sendCreatePlayerRequest(editor, model);
 
         Allure.step("Step 3: Attach response to report");
         Allure.addAttachment("Create Player Response", "text/plain", response.asString());
 
         Allure.step("Step 4: Validate response");
         Assert.assertEquals(response.statusCode(), 200, "Expected 200 OK for user with minimum valid age");
-        Assert.assertTrue(response.asString().contains(login), "Response should contain login");
-        Assert.assertTrue(response.asString().contains(role), "Response should contain role");
 
-        CommonAssertions.validateCreateUserJsonStructure(response);
+        CreatePlayerResponseModel responseModel = response.as(CreatePlayerResponseModel.class);
+        Assert.assertEquals(responseModel.getLogin(), model.getLogin(), "Login should match");
+        Assert.assertEquals(responseModel.getRole(), model.getRole(), "Role should match");
+
+        CommonAssertions.validateCreateUserResponse(responseModel);
     }
 
     @Test(description = "Create user with maximum valid age")
@@ -87,25 +97,28 @@ public class CreatePlayerPositiveTests extends BaseTest {
     public void createUserWithMaximumValidAge_PositiveTest() {
         Allure.step("Step 1: Generate test data");
         String editor = "supervisor";
-        String login = TestDataGenerator.generateUniqueLogin();
-        String screenName = "ValidPlayerMaxAge";
-        String password = TestDataGenerator.generateValidPassword();
-        String role = "user";
-        String gender = TestDataGenerator.getRandomGender();
-        String age = "59"; // maximum valid age
+
+        CreatePlayerRequestModel model = new CreatePlayerRequestModel();
+        model.setLogin(TestDataGenerator.generateUniqueLogin());
+        model.setScreenName("ValidPlayerMaxAge");
+        model.setPassword(TestDataGenerator.generateValidPassword());
+        model.setGender(TestDataGenerator.getRandomGender());
+        model.setAge("59"); // maximum valid age
+        model.setRole("user");
 
         Allure.step("Step 2: Send create player request");
-        Response response = PlayerApi.sendCreatePlayerRequest(editor, age, gender, login, password, role, screenName);
+        Response response = PlayerApi.sendCreatePlayerRequest(editor, model);
 
         Allure.step("Step 3: Attach response to report");
         Allure.addAttachment("Create Player Response", "text/plain", response.asString());
 
         Allure.step("Step 4: Validate response");
         Assert.assertEquals(response.statusCode(), 200, "Expected 200 OK for user with maximum valid age");
-        Assert.assertTrue(response.asString().contains(login), "Response should contain login");
-        Assert.assertTrue(response.asString().contains(role), "Response should contain role");
 
-        CommonAssertions.validateCreateUserJsonStructure(response);
+        CreatePlayerResponseModel responseModel = response.as(CreatePlayerResponseModel.class);
+        Assert.assertEquals(responseModel.getLogin(), model.getLogin(), "Login should match");
+        Assert.assertEquals(responseModel.getRole(), model.getRole(), "Role should match");
+
+        CommonAssertions.validateCreateUserResponse(responseModel);
     }
-
 }

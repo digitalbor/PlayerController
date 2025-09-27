@@ -11,27 +11,18 @@ import java.util.Map;
 public class CommonAssertions {
 
     //Validate and Delete response JSON structures are the same
-    public static void validateCreateUserJsonStructure(Response response) {
-        Allure.step("Step 5: Validate JSON response structure");
+    public static void validateCreateUserResponse(CreatePlayerResponseModel model) {
+        Allure.step("Step 5: Validate response model structure");
 
-        JsonPath json = response.jsonPath();
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertNotNull(json.get("age"), "Response should contain 'age'");
-        softAssert.assertNotNull(json.get("gender"), "Response should contain 'gender'");
-        softAssert.assertNotNull(json.get("id"), "Response should contain 'id'");
-        softAssert.assertNotNull(json.get("login"), "Response should contain 'login'");
-        softAssert.assertNotNull(json.get("password"), "Response should contain 'password'");
-        softAssert.assertNotNull(json.get("role"), "Response should contain 'role'");
-        softAssert.assertNotNull(json.get("screenName"), "Response should contain 'screenName'");
-
-        softAssert.assertTrue(json.get("age") instanceof Integer, "age should be an integer");
-        softAssert.assertTrue(json.get("gender") instanceof String, "gender should be a string");
-        softAssert.assertTrue(json.get("id") instanceof Integer, "id should be an integer");
-        softAssert.assertTrue(json.get("login") instanceof String, "login should be a string");
-        softAssert.assertTrue(json.get("password") instanceof String, "password should be a string");
-        softAssert.assertTrue(json.get("role") instanceof String, "role should be a string");
-        softAssert.assertTrue(json.get("screenName") instanceof String, "screenName should be a string");
+        softAssert.assertNotNull(model.getId(), "ID should not be null");
+        softAssert.assertNotNull(model.getLogin(), "Login should not be null");
+        softAssert.assertNotNull(model.getPassword(), "Password should not be null");
+        softAssert.assertNotNull(model.getRole(), "Role should not be null");
+        softAssert.assertNotNull(model.getScreenName(), "ScreenName should not be null");
+        softAssert.assertNotNull(model.getGender(), "Gender should not be null");
+        softAssert.assertTrue(model.getAge() > 0, "Age should be positive");
 
         softAssert.assertAll();
     }

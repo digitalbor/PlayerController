@@ -1,6 +1,7 @@
 package com.pavel.qa.tests.player.delete;
 
 import com.pavel.qa.base.BaseTest;
+import com.pavel.qa.utils.CreatePlayerRequestModel;
 import com.pavel.qa.utils.PlayerApi;
 import com.pavel.qa.utils.TestDataGenerator;
 import io.qameta.allure.Allure;
@@ -29,7 +30,15 @@ public class DeletePlayerNegativeTests extends BaseTest {
         String role = "admin";
         String creator = "supervisor"; // only supervisor can create admins
 
-        Response createResponse = PlayerApi.sendCreatePlayerRequest(creator, age, gender, login, password, role, screenName);
+        CreatePlayerRequestModel model = new CreatePlayerRequestModel();
+        model.setLogin(login);
+        model.setScreenName(screenName);
+        model.setPassword(password);
+        model.setGender(gender);
+        model.setAge(age);
+        model.setRole(role);
+
+        Response createResponse = PlayerApi.sendCreatePlayerRequest(creator, model);
         Allure.addAttachment("Create Admin Response", "text/plain", createResponse.asString());
         Assert.assertEquals(createResponse.statusCode(), 200, "Admin creation failed before deletion attempt");
 
@@ -37,11 +46,9 @@ public class DeletePlayerNegativeTests extends BaseTest {
 
         Allure.step("Step 2: Attempt to delete admin user using another admin");
         Response deleteResponse = PlayerApi.sendDeletePlayerRequest("admin", playerId);
-
         Allure.addAttachment("Delete Attempt Response", "text/plain", deleteResponse.asString());
 
         Allure.step("Step 3: Validate that deletion is forbidden");
         Assert.assertEquals(deleteResponse.statusCode(), 403, "Expected 403 Forbidden when admin tries to delete another admin");
     }
 }
-

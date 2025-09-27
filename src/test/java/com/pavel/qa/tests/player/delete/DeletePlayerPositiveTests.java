@@ -1,6 +1,7 @@
 package com.pavel.qa.tests.player.delete;
 
 import com.pavel.qa.base.BaseTest;
+import com.pavel.qa.utils.CreatePlayerRequestModel;
 import com.pavel.qa.utils.PlayerApi;
 import com.pavel.qa.utils.TestDataGenerator;
 import io.qameta.allure.Allure;
@@ -21,15 +22,17 @@ public class DeletePlayerPositiveTests extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     public void deleteUserBySupervisor_PositiveTest() {
         Allure.step("Step 1: Create user to be deleted");
-        String login = TestDataGenerator.generateUniqueLogin();
-        String screenName = TestDataGenerator.generateUniqueScreenName();
-        String password = TestDataGenerator.generateValidPassword();
-        String gender = TestDataGenerator.getRandomGender();
-        String age = TestDataGenerator.generateValidAge();
-        String role = "user";
         String editor = "supervisor";
 
-        Response createResponse = PlayerApi.sendCreatePlayerRequest(editor, age, gender, login, password, role, screenName);
+        CreatePlayerRequestModel model = new CreatePlayerRequestModel();
+        model.setLogin(TestDataGenerator.generateUniqueLogin());
+        model.setScreenName(TestDataGenerator.generateUniqueScreenName());
+        model.setPassword(TestDataGenerator.generateValidPassword());
+        model.setGender(TestDataGenerator.getRandomGender());
+        model.setAge(TestDataGenerator.generateValidAge());
+        model.setRole("user");
+
+        Response createResponse = PlayerApi.sendCreatePlayerRequest(editor, model);
         Allure.addAttachment("Create Player Response", "text/plain", createResponse.asString());
         Assert.assertEquals(createResponse.statusCode(), 200, "User creation failed before deletion");
 
@@ -45,7 +48,7 @@ public class DeletePlayerPositiveTests extends BaseTest {
         Allure.step("Step 4: Verify the user does not exist anymore");
         Response getResponse = PlayerApi.sendGetPlayerRequest(playerId);
         Allure.addAttachment("Get Player Response", "text/plain", getResponse.asString());
-        Assert.assertEquals(deleteResponse.statusCode(), 404, "Expected 404 NOT_FOUND for deleted user");
+        Assert.assertEquals(getResponse.statusCode(), 404, "Expected 404 NOT_FOUND for deleted user");
     }
 
     @Test(description = "Delete user successfully by admin")
@@ -54,17 +57,19 @@ public class DeletePlayerPositiveTests extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     public void deleteUserByAdmin_PositiveTest() {
         Allure.step("Step 1: Create user to be deleted");
-        String login = TestDataGenerator.generateUniqueLogin();
-        String screenName = TestDataGenerator.generateUniqueScreenName();
-        String password = TestDataGenerator.generateValidPassword();
-        String gender = TestDataGenerator.getRandomGender();
-        String age = TestDataGenerator.generateValidAge();
-        String role = "user";
         String editor = "admin";
 
-        Response createResponse = PlayerApi.sendCreatePlayerRequest(editor, age, gender, login, password, role, screenName);
+        CreatePlayerRequestModel model = new CreatePlayerRequestModel();
+        model.setLogin(TestDataGenerator.generateUniqueLogin());
+        model.setScreenName(TestDataGenerator.generateUniqueScreenName());
+        model.setPassword(TestDataGenerator.generateValidPassword());
+        model.setGender(TestDataGenerator.getRandomGender());
+        model.setAge(TestDataGenerator.generateValidAge());
+        model.setRole("user");
+
+        Response createResponse = PlayerApi.sendCreatePlayerRequest(editor, model);
         Allure.addAttachment("Create Player Response", "text/plain", createResponse.asString());
-        Assert.assertEquals(createResponse.statusCode(), 200, "User creation failed before deletion with no response body");
+        Assert.assertEquals(createResponse.statusCode(), 200, "User creation failed before deletion");
 
         String playerId = createResponse.jsonPath().getString("id");
 
@@ -78,7 +83,6 @@ public class DeletePlayerPositiveTests extends BaseTest {
         Allure.step("Step 4: Verify the user does not exist anymore");
         Response getResponse = PlayerApi.sendGetPlayerRequest(playerId);
         Allure.addAttachment("Get Player Response", "text/plain", getResponse.asString());
-        Assert.assertEquals(deleteResponse.statusCode(), 404, "Expected 404 NOT_FOUND for deleted user");
+        Assert.assertEquals(getResponse.statusCode(), 404, "Expected 404 NOT_FOUND for deleted user");
     }
 }
-

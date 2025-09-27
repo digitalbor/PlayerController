@@ -8,16 +8,16 @@ import java.util.Map;
 
 public class PlayerApi {
 
-    public static Response sendCreatePlayerRequest(String editor, String age, String gender, String login, String password, String role, String screenName) {
+    public static Response sendCreatePlayerRequest(String editor, CreatePlayerRequestModel model) {
         return RestAssured
                 .given()
                 .header("accept", "*/*")
-                .queryParam("age", age)
-                .queryParam("gender", gender)
-                .queryParam("login", login)
-                .queryParam("password", password)
-                .queryParam("role", role)
-                .queryParam("screenName", screenName)
+                .queryParam("age", model.getAge())
+                .queryParam("gender", model.getGender())
+                .queryParam("login", model.getLogin())
+                .queryParam("password", model.getPassword())
+                .queryParam("role", model.getRole())
+                .queryParam("screenName", model.getScreenName())
                 .get("/player/create/" + editor);
     }
 
