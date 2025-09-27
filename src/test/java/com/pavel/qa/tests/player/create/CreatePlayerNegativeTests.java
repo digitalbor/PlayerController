@@ -21,9 +21,8 @@ public class CreatePlayerNegativeTests extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     public void createUserWithTooYoungAge_ShouldReturnBadRequest() {
         Allure.step("Step 1: Generate test data");
-        String editor = "supervisor";
-
         CreatePlayerRequestModel model = new CreatePlayerRequestModel();
+        model.setEditor("supervisor");
         model.setLogin(TestDataGenerator.generateUniqueLogin());
         model.setScreenName(TestDataGenerator.generateUniqueScreenName());
         model.setPassword(TestDataGenerator.generateValidPassword());
@@ -32,7 +31,7 @@ public class CreatePlayerNegativeTests extends BaseTest {
         model.setRole("user");
 
         Allure.step("Step 2: Send create player request");
-        Response response = PlayerApi.sendCreatePlayerRequest(editor, model);
+        Response response = PlayerApi.sendCreatePlayerRequest(model);
 
         Allure.step("Step 3: Attach response to report");
         Allure.addAttachment("Create Player Response", "text/plain", response.asString());
@@ -57,7 +56,7 @@ public class CreatePlayerNegativeTests extends BaseTest {
         model.setRole("user");
 
         Allure.step("Step 2: Send create player request");
-        Response response = PlayerApi.sendCreatePlayerRequest(editor, model);
+        Response response = PlayerApi.sendCreatePlayerRequest(model);
 
         Allure.step("Step 3: Attach response to report");
         Allure.addAttachment("Create Player Response", "text/plain", response.asString());

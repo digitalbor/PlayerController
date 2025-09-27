@@ -1,7 +1,9 @@
+
 package com.pavel.qa.tests.player.get;
 
 import com.pavel.qa.base.BaseTest;
 import com.pavel.qa.utils.PlayerApi;
+import com.pavel.qa.utils.GetPlayerByIdRequestModel;
 import io.qameta.allure.Allure;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
@@ -18,27 +20,23 @@ public class GetPlayerByIdNegativeTests extends BaseTest {
     @DataProvider(name = "invalidPlayerId")
     public Object[][] invalidPlayerId() {
         return new Object[][] {
-                {""},                    // empty string
-                {" "},                   // space
-                {"null"},                // "null"
-                {"!@#$%^&*()"},          // special characters
-                {"999999999999G"},       // not existing ID
-                {"abc123"},              // random string + letters
-                {"-1"},                  // negative value
-                {"0"}                    // zero
+                {-1L},                    // negative value
+                {0L},                     // zero
+                {999999999999L}          // not existing ID
         };
     }
 
-    @Test(description = "Attempt to get player with invalid userId should return 404/404/403", dataProvider = "invalidPlayerId")
+    @Test(description = "Attempt to get player with invalid userId should return 404/400/403", dataProvider = "invalidPlayerId")
     @Description("Verify that request with invalid playerId returns error")
     @Story("Negative Test - Invalid playerId")
     @Severity(SeverityLevel.CRITICAL)
-    public void getPlayerWithInvalidPlayerId_NegativeTest(String invalidPlayerId) {
+    public void getPlayerWithInvalidPlayerId_NegativeTest(Long invalidPlayerId) {
 
         Allure.step("Step 1: Send get player request with invalid playerId: " + invalidPlayerId);
-        Response response = PlayerApi.sendGetPlayerRequest(invalidPlayerId);
+        GetPlayerByIdRequestModel requestModel = new GetPlayerByIdRequestModel();
+        requestModel.setPlayerId(invalidPlayerId);
+        Response response = PlayerApi.sendGetPlayerByIdRequest(requestModel.getPlayerId());
         Allure.addAttachment("Get Player Response (Invalid ID)", "application/json", response.asString());
-
 
         Allure.step("Step 2: Validate error response");
         Assert.assertNotEquals(response.statusCode(), 200, "Expected error response for invalid playerId");

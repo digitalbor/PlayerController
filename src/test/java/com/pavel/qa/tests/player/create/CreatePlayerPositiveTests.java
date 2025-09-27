@@ -44,7 +44,7 @@ public class CreatePlayerPositiveTests extends BaseTest {
         model.setRole(role);
 
         Allure.step("Step 2: Send create player request");
-        Response response = PlayerApi.sendCreatePlayerRequest(editor, model);
+        Response response = PlayerApi.sendCreatePlayerRequest(model);
 
         Allure.step("Step 3: Attach response to report");
         Allure.addAttachment("Create Player Response", "text/plain", response.asString());
@@ -55,8 +55,22 @@ public class CreatePlayerPositiveTests extends BaseTest {
         CreatePlayerResponseModel responseModel = response.as(CreatePlayerResponseModel.class);
         Assert.assertEquals(responseModel.getLogin(), model.getLogin(), "Login should match");
         Assert.assertEquals(responseModel.getRole(), model.getRole(), "Role should match");
-
+        Assert.assertEquals(responseModel.getScreenName(), model.getScreenName(), "ScreenName should match");
+        Assert.assertEquals(responseModel.getGender(), model.getGender(), "Gender should match");
+        Assert.assertEquals(responseModel.getAge(), Integer.parseInt(model.getAge()), "Age should match");
         CommonAssertions.validateCreateUserResponse(responseModel);
+
+        Allure.step("Step 5: Verify player data via GET request");
+        Response getResponse = PlayerApi.sendGetPlayerByIdRequest((long) responseModel.getId());
+        Allure.addAttachment("Get Player Response", "text/plain", getResponse.asString());
+        Assert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player");
+
+        CreatePlayerResponseModel getModel = getResponse.as(CreatePlayerResponseModel.class);
+        Assert.assertEquals(getModel.getLogin(), model.getLogin(), "Login should match");
+        Assert.assertEquals(getModel.getRole(), model.getRole(), "Role should match");
+        Assert.assertEquals(getModel.getScreenName(), model.getScreenName(), "ScreenName should match");
+        Assert.assertEquals(getModel.getGender(), model.getGender(), "Gender should match");
+        Assert.assertEquals(getModel.getAge(), Integer.parseInt(model.getAge()), "Age should match");
     }
 
     @Test(description = "Create user with minimum valid age")
@@ -65,7 +79,6 @@ public class CreatePlayerPositiveTests extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     public void createUserWithMinimumValidAge_PositiveTest() {
         Allure.step("Step 1: Generate test data");
-        String editor = "supervisor";
 
         CreatePlayerRequestModel model = new CreatePlayerRequestModel();
         model.setLogin(TestDataGenerator.generateUniqueLogin());
@@ -74,9 +87,10 @@ public class CreatePlayerPositiveTests extends BaseTest {
         model.setGender(TestDataGenerator.getRandomGender());
         model.setAge("17"); // minimum valid age
         model.setRole("user");
+        model.setEditor("supervisor");
 
         Allure.step("Step 2: Send create player request");
-        Response response = PlayerApi.sendCreatePlayerRequest(editor, model);
+        Response response = PlayerApi.sendCreatePlayerRequest(model);
 
         Allure.step("Step 3: Attach response to report");
         Allure.addAttachment("Create Player Response", "text/plain", response.asString());
@@ -87,8 +101,22 @@ public class CreatePlayerPositiveTests extends BaseTest {
         CreatePlayerResponseModel responseModel = response.as(CreatePlayerResponseModel.class);
         Assert.assertEquals(responseModel.getLogin(), model.getLogin(), "Login should match");
         Assert.assertEquals(responseModel.getRole(), model.getRole(), "Role should match");
-
+        Assert.assertEquals(responseModel.getScreenName(), model.getScreenName(), "ScreenName should match");
+        Assert.assertEquals(responseModel.getGender(), model.getGender(), "Gender should match");
+        Assert.assertEquals(responseModel.getAge(), Integer.parseInt(model.getAge()), "Age should match");
         CommonAssertions.validateCreateUserResponse(responseModel);
+
+        Allure.step("Step 5: Verify player data via GET request");
+        Response getResponse = PlayerApi.sendGetPlayerByIdRequest((long) responseModel.getId());
+        Allure.addAttachment("Get Player Response", "text/plain", getResponse.asString());
+        Assert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player");
+
+        CreatePlayerResponseModel getModel = getResponse.as(CreatePlayerResponseModel.class);
+        Assert.assertEquals(getModel.getLogin(), model.getLogin(), "Login should match");
+        Assert.assertEquals(getModel.getRole(), model.getRole(), "Role should match");
+        Assert.assertEquals(getModel.getScreenName(), model.getScreenName(), "ScreenName should match");
+        Assert.assertEquals(getModel.getGender(), model.getGender(), "Gender should match");
+        Assert.assertEquals(getModel.getAge(), Integer.parseInt(model.getAge()), "Age should match");
     }
 
     @Test(description = "Create user with maximum valid age")
@@ -96,7 +124,6 @@ public class CreatePlayerPositiveTests extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     public void createUserWithMaximumValidAge_PositiveTest() {
         Allure.step("Step 1: Generate test data");
-        String editor = "supervisor";
 
         CreatePlayerRequestModel model = new CreatePlayerRequestModel();
         model.setLogin(TestDataGenerator.generateUniqueLogin());
@@ -105,9 +132,10 @@ public class CreatePlayerPositiveTests extends BaseTest {
         model.setGender(TestDataGenerator.getRandomGender());
         model.setAge("59"); // maximum valid age
         model.setRole("user");
+        model.setEditor("supervisor");
 
         Allure.step("Step 2: Send create player request");
-        Response response = PlayerApi.sendCreatePlayerRequest(editor, model);
+        Response response = PlayerApi.sendCreatePlayerRequest(model);
 
         Allure.step("Step 3: Attach response to report");
         Allure.addAttachment("Create Player Response", "text/plain", response.asString());
@@ -118,7 +146,21 @@ public class CreatePlayerPositiveTests extends BaseTest {
         CreatePlayerResponseModel responseModel = response.as(CreatePlayerResponseModel.class);
         Assert.assertEquals(responseModel.getLogin(), model.getLogin(), "Login should match");
         Assert.assertEquals(responseModel.getRole(), model.getRole(), "Role should match");
-
+        Assert.assertEquals(responseModel.getScreenName(), model.getScreenName(), "ScreenName should match");
+        Assert.assertEquals(responseModel.getGender(), model.getGender(), "Gender should match");
+        Assert.assertEquals(responseModel.getAge(), Integer.parseInt(model.getAge()), "Age should match");
         CommonAssertions.validateCreateUserResponse(responseModel);
+
+        Allure.step("Step 5: Verify player data via GET request");
+        Response getResponse = PlayerApi.sendGetPlayerByIdRequest((long) responseModel.getId());
+        Allure.addAttachment("Get Player Response", "text/plain", getResponse.asString());
+        Assert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player");
+
+        CreatePlayerResponseModel getModel = getResponse.as(CreatePlayerResponseModel.class);
+        Assert.assertEquals(getModel.getLogin(), model.getLogin(), "Login should match");
+        Assert.assertEquals(getModel.getRole(), model.getRole(), "Role should match");
+        Assert.assertEquals(getModel.getScreenName(), model.getScreenName(), "ScreenName should match");
+        Assert.assertEquals(getModel.getGender(), model.getGender(), "Gender should match");
+        Assert.assertEquals(getModel.getAge(), Integer.parseInt(model.getAge()), "Age should match");
     }
 }

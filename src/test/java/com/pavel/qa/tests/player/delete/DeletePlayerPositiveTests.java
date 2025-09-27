@@ -32,7 +32,7 @@ public class DeletePlayerPositiveTests extends BaseTest {
         model.setAge(TestDataGenerator.generateValidAge());
         model.setRole("user");
 
-        Response createResponse = PlayerApi.sendCreatePlayerRequest(editor, model);
+        Response createResponse = PlayerApi.sendCreatePlayerRequest(model);
         Allure.addAttachment("Create Player Response", "text/plain", createResponse.asString());
         Assert.assertEquals(createResponse.statusCode(), 200, "User creation failed before deletion");
 
@@ -46,7 +46,7 @@ public class DeletePlayerPositiveTests extends BaseTest {
         Assert.assertEquals(deleteResponse.statusCode(), 204, "Expected 204 OK for successful deletion with no response body");
 
         Allure.step("Step 4: Verify the user does not exist anymore");
-        Response getResponse = PlayerApi.sendGetPlayerRequest(playerId);
+        Response getResponse = PlayerApi.sendGetPlayerByIdRequest(Long.valueOf(playerId));
         Allure.addAttachment("Get Player Response", "text/plain", getResponse.asString());
         Assert.assertEquals(getResponse.statusCode(), 404, "Expected 404 NOT_FOUND for deleted user");
     }
@@ -67,7 +67,7 @@ public class DeletePlayerPositiveTests extends BaseTest {
         model.setAge(TestDataGenerator.generateValidAge());
         model.setRole("user");
 
-        Response createResponse = PlayerApi.sendCreatePlayerRequest(editor, model);
+        Response createResponse = PlayerApi.sendCreatePlayerRequest(model);
         Allure.addAttachment("Create Player Response", "text/plain", createResponse.asString());
         Assert.assertEquals(createResponse.statusCode(), 200, "User creation failed before deletion");
 
@@ -81,7 +81,7 @@ public class DeletePlayerPositiveTests extends BaseTest {
         Assert.assertEquals(deleteResponse.statusCode(), 204, "Expected 204 OK for successful deletion");
 
         Allure.step("Step 4: Verify the user does not exist anymore");
-        Response getResponse = PlayerApi.sendGetPlayerRequest(playerId);
+        Response getResponse = PlayerApi.sendGetPlayerByIdRequest(Long.valueOf(playerId));
         Allure.addAttachment("Get Player Response", "text/plain", getResponse.asString());
         Assert.assertEquals(getResponse.statusCode(), 404, "Expected 404 NOT_FOUND for deleted user");
     }

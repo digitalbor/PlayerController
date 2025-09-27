@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class PlayerApi {
 
-    public static Response sendCreatePlayerRequest(String editor, CreatePlayerRequestModel model) {
+    public static Response sendCreatePlayerRequest(CreatePlayerRequestModel model) {
         return RestAssured
                 .given()
                 .header("accept", "*/*")
@@ -18,7 +18,7 @@ public class PlayerApi {
                 .queryParam("password", model.getPassword())
                 .queryParam("role", model.getRole())
                 .queryParam("screenName", model.getScreenName())
-                .get("/player/create/" + editor);
+                .get("/player/create/" + model.getEditor());
     }
 
 
@@ -36,7 +36,7 @@ public class PlayerApi {
     }
 
 
-    public static Response sendGetPlayerRequest(String playerId) {
+    public static Response sendGetPlayerByIdRequest(Long playerId) {
         String jsonBody = "{ \"playerId\": \"" + playerId + "\" }";
 
         return RestAssured

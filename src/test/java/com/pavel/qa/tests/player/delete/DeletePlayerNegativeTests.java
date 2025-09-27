@@ -38,7 +38,7 @@ public class DeletePlayerNegativeTests extends BaseTest {
         model.setAge(age);
         model.setRole(role);
 
-        Response createResponse = PlayerApi.sendCreatePlayerRequest(creator, model);
+        Response createResponse = PlayerApi.sendCreatePlayerRequest(model);
         Allure.addAttachment("Create Admin Response", "text/plain", createResponse.asString());
         Assert.assertEquals(createResponse.statusCode(), 200, "Admin creation failed before deletion attempt");
 

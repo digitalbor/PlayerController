@@ -7,6 +7,7 @@ public class CreatePlayerRequestModel {
     private String password;
     private String role;
     private String screenName;
+    private String editor;
 
     // Getters and setters
 
@@ -56,5 +57,13 @@ public class CreatePlayerRequestModel {
 
     public void setScreenName(String screenName) {
         this.screenName = screenName;
+    }
+
+    public String getEditor() {
+        return editor;
+    }
+
+    public void setEditor(String editor) {
+        this.editor = editor;
     }
 }
