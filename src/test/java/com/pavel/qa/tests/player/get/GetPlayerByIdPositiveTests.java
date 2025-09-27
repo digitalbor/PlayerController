@@ -20,8 +20,7 @@ public class GetPlayerByIdPositiveTests extends BaseTest {
     @Story("Positive Test - Get Player by ID")
     @Severity(SeverityLevel.CRITICAL)
     public void getPlayerByPlayerId_PositiveTest() {
-        Allure.step("Step 1: Create user to be retrieved");
-
+        Allure.step("Step 1: Create user to be retrieved (precondition)");
         CreatePlayerRequestModel model = new CreatePlayerRequestModel();
         model.setLogin(TestDataGenerator.generateUniqueLogin());
         model.setScreenName(TestDataGenerator.generateUniqueScreenName());
@@ -35,15 +34,18 @@ public class GetPlayerByIdPositiveTests extends BaseTest {
         Allure.addAttachment("Create Player Response", "text/plain", createResponse.asString());
         Assert.assertEquals(createResponse.statusCode(), 200, "User creation failed before retrieval");
 
+        Allure.step("Step 2: Retrieve player id");
         Long playerId = createResponse.jsonPath().getLong("id");
 
-        Allure.step("Step 2: Send get player request");
+        Allure.step("Step 3: Send get player request");
         GetPlayerByIdRequestModel getRequest = new GetPlayerByIdRequestModel();
         getRequest.setPlayerId(playerId);
         Response getResponse = PlayerApi.sendGetPlayerByIdRequest(getRequest.getPlayerId());
+        Allure.addAttachment("Get Player Response Code", "text/plain", String.valueOf(getResponse.statusCode()));
+        Allure.addAttachment("Get Player Response Headers", "text/plain", getResponse.getHeaders().toString());
         Allure.addAttachment("Get Player Response", "application/json", getResponse.asString());
 
-        Allure.step("Step 3: Validate get response");
+        Allure.step("Step 4: Validate get response");
         Assert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player request");
 
         GetPlayerByIdResponseModel responseModel = getResponse.as(GetPlayerByIdResponseModel.class);
@@ -52,5 +54,6 @@ public class GetPlayerByIdPositiveTests extends BaseTest {
         Assert.assertEquals(responseModel.getScreenName(), model.getScreenName(), "ScreenName should match");
         Assert.assertEquals(responseModel.getGender(), model.getGender(), "Gender should match");
         Assert.assertEquals(responseModel.getAge(), Integer.parseInt(model.getAge()), "Age should match");
+        CommonAssertions.validateGetPlayerByIdResponse(responseModel);
     }
 }

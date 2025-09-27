@@ -32,11 +32,11 @@ public class CreatePlayerNegativeTests extends BaseTest {
 
         Allure.step("Step 2: Send create player request");
         Response response = PlayerApi.sendCreatePlayerRequest(model);
-
-        Allure.step("Step 3: Attach response to report");
+        Allure.addAttachment("Create Player Response Code", "text/plain", String.valueOf(response.statusCode()));
+        Allure.addAttachment("Create Player Response Headers", "text/plain", response.getHeaders().toString());
         Allure.addAttachment("Create Player Response", "text/plain", response.asString());
 
-        Allure.step("Step 4: Validate response");
+        Allure.step("Step 3: Validate response");
         Assert.assertEquals(response.statusCode(), 400, "Expected 400 BAD_REQUEST for age < 16");
     }
 
@@ -45,8 +45,6 @@ public class CreatePlayerNegativeTests extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     public void createUserWithInvalidGender_ShouldReturnBadRequest() {
         Allure.step("Step 1: Generate test data");
-        String editor = "supervisor";
-
         CreatePlayerRequestModel model = new CreatePlayerRequestModel();
         model.setLogin(TestDataGenerator.generateUniqueLogin());
         model.setScreenName(TestDataGenerator.generateUniqueScreenName());
@@ -54,14 +52,15 @@ public class CreatePlayerNegativeTests extends BaseTest {
         model.setGender("unknown"); // Invalid gender
         model.setAge(TestDataGenerator.generateValidAge());
         model.setRole("user");
+        model.setEditor("supervisor");
 
         Allure.step("Step 2: Send create player request");
         Response response = PlayerApi.sendCreatePlayerRequest(model);
-
-        Allure.step("Step 3: Attach response to report");
+        Allure.addAttachment("Create Player Response Code", "text/plain", String.valueOf(response.statusCode()));
+        Allure.addAttachment("Create Player Response Headers", "text/plain", response.getHeaders().toString());
         Allure.addAttachment("Create Player Response", "text/plain", response.asString());
 
-        Allure.step("Step 4: Validate response");
+        Allure.step("Step 3: Validate response");
         Assert.assertEquals(response.statusCode(), 400, "Expected 400 BAD_REQUEST for invalid gender");
     }
 }
