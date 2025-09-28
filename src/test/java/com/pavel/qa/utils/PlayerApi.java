@@ -49,12 +49,5 @@ public class PlayerApi {
                 .post("/player/get");
     }
 
-    public static Response sendGetPlayersAllRequest() {
-
-        return  RestAssured
-                .given()
-                .header("accept", "*/*")
-                .get("/player/get/all");
-    }
 
 }

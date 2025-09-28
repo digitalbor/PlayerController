@@ -7,7 +7,7 @@ public class GetPlayerByIdRequestModel {
         return id;
     }
 
-    public void setId(Long playerId) {
+    public void setId(Long id) {
         this.id = id;
     }
 }
