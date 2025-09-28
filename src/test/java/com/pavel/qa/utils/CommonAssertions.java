@@ -1,12 +1,7 @@
 package com.pavel.qa.utils;
 
 import io.qameta.allure.Allure;
-import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
 import org.testng.asserts.SoftAssert;
-
-import java.util.List;
-import java.util.Map;
 
 public class CommonAssertions {
 
