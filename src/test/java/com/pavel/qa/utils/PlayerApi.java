@@ -1,8 +1,6 @@
 package com.pavel.qa.utils;
 
-import com.pavel.qa.models.CreatePlayerRequestModel;
-import com.pavel.qa.models.DeletePlayerRequestModel;
-import com.pavel.qa.models.GetPlayerByIdRequestModel;
+import com.pavel.qa.models.*;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 
@@ -51,6 +49,17 @@ public class PlayerApi {
                 .body(body)
                 .post("/player/get");
     }
+
+
+    public static Response sendUpdatePlayerRequest(String editor, Long id, UpdatePlayerRequestModel model) {
+        return RestAssured
+                .given()
+                .header("accept", "*/*")
+                .header("Content-Type", "application/json")
+                .body(model)
+                .patch("/player/update/" + editor + "/" + id);
+    }
+
 
 
 }
