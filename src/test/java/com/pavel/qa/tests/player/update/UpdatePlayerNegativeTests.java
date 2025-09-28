@@ -2,8 +2,7 @@ package com.pavel.qa.tests.player.update;
 
 import com.pavel.qa.base.BaseTest;
 import com.pavel.qa.generators.TestDataGenerator;
-import com.pavel.qa.models.CreatePlayerRequestModel;
-import com.pavel.qa.models.UpdatePlayerRequestModel;
+import com.pavel.qa.models.*;
 import com.pavel.qa.utils.PlayerApi;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
@@ -41,7 +40,8 @@ public class UpdatePlayerNegativeTests extends BaseTest {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(createResponse.statusCode(), 200, "User creation failed before update");
 
-        Long playerId = createResponse.jsonPath().getLong("id");
+        CreatePlayerResponseModel createResponseModel = createResponse.as(CreatePlayerResponseModel.class);
+        Long playerId = createResponseModel.getId();
 
         Allure.step("Step 2: Prepare update request with empty screenName");
         UpdatePlayerRequestModel updateModel = new UpdatePlayerRequestModel();
