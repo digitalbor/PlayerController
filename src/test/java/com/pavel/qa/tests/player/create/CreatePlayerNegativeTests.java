@@ -3,7 +3,7 @@ package com.pavel.qa.tests.player.create;
 import com.pavel.qa.base.BaseTest;
 import com.pavel.qa.models.CreatePlayerRequestModel;
 import com.pavel.qa.utils.PlayerApi;
-import com.pavel.qa.utils.TestDataGenerator;
+import com.pavel.qa.generators.TestDataGenerator;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;

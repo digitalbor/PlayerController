@@ -1,8 +1,8 @@
 package com.pavel.qa.utils;
 
-import com.pavel.qa.tests.player.models.CreatePlayerRequestModel;
-import com.pavel.qa.tests.player.models.DeletePlayerRequestModel;
-import com.pavel.qa.tests.player.models.GetPlayerByIdRequestModel;
+import com.pavel.qa.models.CreatePlayerRequestModel;
+import com.pavel.qa.models.DeletePlayerRequestModel;
+import com.pavel.qa.models.GetPlayerByIdRequestModel;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 

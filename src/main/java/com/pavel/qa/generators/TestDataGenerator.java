@@ -1,4 +1,4 @@
-package com.pavel.qa.utils;
+package com.pavel.qa.generators;
 
 import java.util.concurrent.ThreadLocalRandom;
 

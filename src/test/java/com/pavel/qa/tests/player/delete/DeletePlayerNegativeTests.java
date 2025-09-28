@@ -9,7 +9,7 @@ import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;
 import org.testng.asserts.SoftAssert;
 import org.testng.annotations.Test;
-import com.pavel.qa.utils.TestDataGenerator;
+import com.pavel.qa.generators.TestDataGenerator;
 
 @Epic("PlayerController")
 @Feature("Player Deletion")
