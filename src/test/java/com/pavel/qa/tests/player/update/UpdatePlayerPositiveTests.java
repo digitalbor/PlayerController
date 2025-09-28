@@ -3,16 +3,14 @@ package com.pavel.qa.tests.player.update;
 
 import com.pavel.qa.base.BaseTest;
 import com.pavel.qa.generators.TestDataGenerator;
-import com.pavel.qa.models.CreatePlayerRequestModel;
-import com.pavel.qa.models.GetPlayerByIdRequestModel;
-import com.pavel.qa.models.UpdatePlayerRequestModel;
-import com.pavel.qa.models.UpdatePlayerResponseModel;
+import com.pavel.qa.models.*;
 import com.pavel.qa.utils.*;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import com.pavel.qa.utils.DeserializationUtils;
 
 @Epic("PlayerController")
 @Feature("Player Update")
@@ -61,7 +59,7 @@ public class UpdatePlayerPositiveTests extends BaseTest {
         softAssert.assertEquals(updateResponse.statusCode(), 200, "Expected 200 OK for successful update");
 
         Allure.step("Step 4: Validate updated response");
-        UpdatePlayerResponseModel responseModel = updateResponse.as(UpdatePlayerResponseModel.class);
+        UpdatePlayerResponseModel responseModel = DeserializationUtils.safeDeserialize(updateResponse, UpdatePlayerResponseModel.class);
         softAssert.assertEquals(responseModel.getId(), playerId, "Player ID should match");
         softAssert.assertEquals(responseModel.getScreenName(), updatedScreenName, "ScreenName should be updated");
 

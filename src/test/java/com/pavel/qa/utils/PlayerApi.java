@@ -23,18 +23,21 @@ public class PlayerApi {
     }
 
 
-    public static Response sendDeletePlayerRequest(DeletePlayerRequestModel model) {
 
-        Map<String, String> body = new HashMap<>();
-        body.put("playerId",String.valueOf(model));
+
+    public static Response sendDeletePlayerRequest(String editorLogin, DeletePlayerRequestModel model) {
+        Map<String, Integer> body = new HashMap<>();
+        body.put("playerId", model.getPlayerId());
 
         return RestAssured
                 .given()
                 .header("accept", "*/*")
                 .header("Content-Type", "application/json")
                 .body(body)
-                .delete("/player/delete/" + model.getEditor());
+                .delete("/player/delete/" + editorLogin);
     }
+
+
 
 
     public static Response sendGetPlayerByIdRequest(GetPlayerByIdRequestModel model) {

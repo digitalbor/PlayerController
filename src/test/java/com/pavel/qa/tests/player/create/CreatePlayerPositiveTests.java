@@ -2,9 +2,8 @@ package com.pavel.qa.tests.player.create;
 
 import com.pavel.qa.base.BaseTest;
 import com.pavel.qa.generators.TestDataGenerator;
-import com.pavel.qa.models.CreatePlayerRequestModel;
-import com.pavel.qa.models.CreatePlayerResponseModel;
-import com.pavel.qa.models.GetPlayerByIdRequestModel;
+import com.pavel.qa.models.*;
+import com.pavel.qa.utils.DeserializationUtils;
 import com.pavel.qa.utils.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.*;
@@ -52,7 +51,7 @@ public class CreatePlayerPositiveTests extends BaseTest {
         Allure.step("Step 3: Validate response");
         softAssert.assertEquals(response.statusCode(), 200, "Expected 200 OK for valid user creation");
 
-        CreatePlayerResponseModel responseModel = response.as(CreatePlayerResponseModel.class);
+        CreatePlayerResponseModel responseModel = DeserializationUtils.safeDeserialize(response, CreatePlayerResponseModel.class);
         softAssert.assertEquals(responseModel.getLogin(), model.getLogin(), "Login should match");
         softAssert.assertEquals(responseModel.getRole(), model.getRole(), "Role should match");
         softAssert.assertEquals(responseModel.getScreenName(), model.getScreenName(), "ScreenName should match");
@@ -68,7 +67,7 @@ public class CreatePlayerPositiveTests extends BaseTest {
         Allure.addAttachment("Get Player Full Response", "text/plain", getResponse.statusCode() + "\n" + getResponse.getHeaders().toString() + "\n" + getResponse.asString());
         softAssert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player");
 
-        CreatePlayerResponseModel getModel = getResponse.as(CreatePlayerResponseModel.class);
+        CreatePlayerResponseModel getModel = DeserializationUtils.safeDeserialize(getResponse, CreatePlayerResponseModel.class);
         softAssert.assertEquals(getModel.getLogin(), model.getLogin(), "Login should match");
         softAssert.assertEquals(getModel.getRole(), model.getRole(), "Role should match");
         softAssert.assertEquals(getModel.getScreenName(), model.getScreenName(), "ScreenName should match");
@@ -100,7 +99,7 @@ public class CreatePlayerPositiveTests extends BaseTest {
         Allure.step("Step 3: Validate response");
         softAssert.assertEquals(response.statusCode(), 200, "Expected 200 OK for user with minimum valid age");
 
-        CreatePlayerResponseModel responseModel = response.as(CreatePlayerResponseModel.class);
+        CreatePlayerResponseModel responseModel = DeserializationUtils.safeDeserialize(response, CreatePlayerResponseModel.class);
         softAssert.assertEquals(responseModel.getLogin(), model.getLogin(), "Login should match");
         softAssert.assertEquals(responseModel.getRole(), model.getRole(), "Role should match");
         softAssert.assertEquals(responseModel.getScreenName(), model.getScreenName(), "ScreenName should match");
@@ -116,7 +115,7 @@ public class CreatePlayerPositiveTests extends BaseTest {
         Allure.addAttachment("Get Player Full Response", "text/plain", getResponse.statusCode() + "\n" + getResponse.getHeaders().toString() + "\n" + getResponse.asString());
         softAssert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player");
 
-        CreatePlayerResponseModel getModel = getResponse.as(CreatePlayerResponseModel.class);
+        CreatePlayerResponseModel getModel = DeserializationUtils.safeDeserialize(getResponse, CreatePlayerResponseModel.class);
         softAssert.assertEquals(getModel.getLogin(), model.getLogin(), "Login should match");
         softAssert.assertEquals(getModel.getRole(), model.getRole(), "Role should match");
         softAssert.assertEquals(getModel.getScreenName(), model.getScreenName(), "ScreenName should match");
@@ -147,7 +146,7 @@ public class CreatePlayerPositiveTests extends BaseTest {
         Allure.step("Step 3: Validate response");
         softAssert.assertEquals(response.statusCode(), 200, "Expected 200 OK for user with maximum valid age");
 
-        CreatePlayerResponseModel responseModel = response.as(CreatePlayerResponseModel.class);
+        CreatePlayerResponseModel responseModel = DeserializationUtils.safeDeserialize(response, CreatePlayerResponseModel.class);
         softAssert.assertEquals(responseModel.getLogin(), model.getLogin(), "Login should match");
         softAssert.assertEquals(responseModel.getRole(), model.getRole(), "Role should match");
         softAssert.assertEquals(responseModel.getScreenName(), model.getScreenName(), "ScreenName should match");
@@ -163,7 +162,7 @@ public class CreatePlayerPositiveTests extends BaseTest {
         Allure.addAttachment("Get Player Full Response", "text/plain", getResponse.statusCode() + "\n" + getResponse.getHeaders().toString() + "\n" + getResponse.asString());
         softAssert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player");
 
-        CreatePlayerResponseModel getModel = getResponse.as(CreatePlayerResponseModel.class);
+        CreatePlayerResponseModel getModel = DeserializationUtils.safeDeserialize(getResponse, CreatePlayerResponseModel.class);
         softAssert.assertEquals(getModel.getLogin(), model.getLogin(), "Login should match");
         softAssert.assertEquals(getModel.getRole(), model.getRole(), "Role should match");
         softAssert.assertEquals(getModel.getScreenName(), model.getScreenName(), "ScreenName should match");
