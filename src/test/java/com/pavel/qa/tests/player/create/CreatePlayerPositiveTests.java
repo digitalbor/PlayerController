@@ -7,6 +7,7 @@ import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -44,15 +45,16 @@ public class CreatePlayerPositiveTests extends BaseTest {
         Response response = PlayerApi.sendCreatePlayerRequest(model);
         Allure.addAttachment("Create Player Full Response", "text/plain", response.statusCode() + "\n" + response.getHeaders().toString() + "\n" + response.asString());
 
+        SoftAssert softAssert = new SoftAssert();
         Allure.step("Step 3: Validate response");
-        Assert.assertEquals(response.statusCode(), 200, "Expected 200 OK for valid user creation");
+        softAssert.assertEquals(response.statusCode(), 200, "Expected 200 OK for valid user creation");
 
         CreatePlayerResponseModel responseModel = response.as(CreatePlayerResponseModel.class);
-        Assert.assertEquals(responseModel.getLogin(), model.getLogin(), "Login should match");
-        Assert.assertEquals(responseModel.getRole(), model.getRole(), "Role should match");
-        Assert.assertEquals(responseModel.getScreenName(), model.getScreenName(), "ScreenName should match");
-        Assert.assertEquals(responseModel.getGender(), model.getGender(), "Gender should match");
-        Assert.assertEquals(responseModel.getAge(), Integer.parseInt(model.getAge()), "Age should match");
+        softAssert.assertEquals(responseModel.getLogin(), model.getLogin(), "Login should match");
+        softAssert.assertEquals(responseModel.getRole(), model.getRole(), "Role should match");
+        softAssert.assertEquals(responseModel.getScreenName(), model.getScreenName(), "ScreenName should match");
+        softAssert.assertEquals(responseModel.getGender(), model.getGender(), "Gender should match");
+        softAssert.assertEquals(responseModel.getAge(), Integer.parseInt(model.getAge()), "Age should match");
         CommonAssertions.validateCreatePlayerResponse(responseModel);
 
         Allure.step("Step 4: Verify player data via GET request");
@@ -61,14 +63,15 @@ public class CreatePlayerPositiveTests extends BaseTest {
 
         Response getResponse = PlayerApi.sendGetPlayerByIdRequest(getRequestModel);
         Allure.addAttachment("Get Player Full Response", "text/plain", getResponse.statusCode() + "\n" + getResponse.getHeaders().toString() + "\n" + getResponse.asString());
-        Assert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player");
+        softAssert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player");
 
         CreatePlayerResponseModel getModel = getResponse.as(CreatePlayerResponseModel.class);
-        Assert.assertEquals(getModel.getLogin(), model.getLogin(), "Login should match");
-        Assert.assertEquals(getModel.getRole(), model.getRole(), "Role should match");
-        Assert.assertEquals(getModel.getScreenName(), model.getScreenName(), "ScreenName should match");
-        Assert.assertEquals(getModel.getGender(), model.getGender(), "Gender should match");
-        Assert.assertEquals(getModel.getAge(), Integer.parseInt(model.getAge()), "Age should match");
+        softAssert.assertEquals(getModel.getLogin(), model.getLogin(), "Login should match");
+        softAssert.assertEquals(getModel.getRole(), model.getRole(), "Role should match");
+        softAssert.assertEquals(getModel.getScreenName(), model.getScreenName(), "ScreenName should match");
+        softAssert.assertEquals(getModel.getGender(), model.getGender(), "Gender should match");
+        softAssert.assertEquals(getModel.getAge(), Integer.parseInt(model.getAge()), "Age should match");
+        softAssert.assertAll();
     }
 
     @Test(description = "Create user with minimum valid age")
@@ -90,15 +93,16 @@ public class CreatePlayerPositiveTests extends BaseTest {
         Response response = PlayerApi.sendCreatePlayerRequest(model);
         Allure.addAttachment("Create Player Full Response", "text/plain", response.statusCode() + "\n" + response.getHeaders().toString() + "\n" + response.asString());
 
+        SoftAssert softAssert = new SoftAssert();
         Allure.step("Step 3: Validate response");
-        Assert.assertEquals(response.statusCode(), 200, "Expected 200 OK for user with minimum valid age");
+        softAssert.assertEquals(response.statusCode(), 200, "Expected 200 OK for user with minimum valid age");
 
         CreatePlayerResponseModel responseModel = response.as(CreatePlayerResponseModel.class);
-        Assert.assertEquals(responseModel.getLogin(), model.getLogin(), "Login should match");
-        Assert.assertEquals(responseModel.getRole(), model.getRole(), "Role should match");
-        Assert.assertEquals(responseModel.getScreenName(), model.getScreenName(), "ScreenName should match");
-        Assert.assertEquals(responseModel.getGender(), model.getGender(), "Gender should match");
-        Assert.assertEquals(responseModel.getAge(), Integer.parseInt(model.getAge()), "Age should match");
+        softAssert.assertEquals(responseModel.getLogin(), model.getLogin(), "Login should match");
+        softAssert.assertEquals(responseModel.getRole(), model.getRole(), "Role should match");
+        softAssert.assertEquals(responseModel.getScreenName(), model.getScreenName(), "ScreenName should match");
+        softAssert.assertEquals(responseModel.getGender(), model.getGender(), "Gender should match");
+        softAssert.assertEquals(responseModel.getAge(), Integer.parseInt(model.getAge()), "Age should match");
         CommonAssertions.validateCreatePlayerResponse(responseModel);
 
         Allure.step("Step 4: Verify player data via GET request");
@@ -107,14 +111,15 @@ public class CreatePlayerPositiveTests extends BaseTest {
 
         Response getResponse = PlayerApi.sendGetPlayerByIdRequest(getRequestModel);
         Allure.addAttachment("Get Player Full Response", "text/plain", getResponse.statusCode() + "\n" + getResponse.getHeaders().toString() + "\n" + getResponse.asString());
-        Assert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player");
+        softAssert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player");
 
         CreatePlayerResponseModel getModel = getResponse.as(CreatePlayerResponseModel.class);
-        Assert.assertEquals(getModel.getLogin(), model.getLogin(), "Login should match");
-        Assert.assertEquals(getModel.getRole(), model.getRole(), "Role should match");
-        Assert.assertEquals(getModel.getScreenName(), model.getScreenName(), "ScreenName should match");
-        Assert.assertEquals(getModel.getGender(), model.getGender(), "Gender should match");
-        Assert.assertEquals(getModel.getAge(), Integer.parseInt(model.getAge()), "Age should match");
+        softAssert.assertEquals(getModel.getLogin(), model.getLogin(), "Login should match");
+        softAssert.assertEquals(getModel.getRole(), model.getRole(), "Role should match");
+        softAssert.assertEquals(getModel.getScreenName(), model.getScreenName(), "ScreenName should match");
+        softAssert.assertEquals(getModel.getGender(), model.getGender(), "Gender should match");
+        softAssert.assertEquals(getModel.getAge(), Integer.parseInt(model.getAge()), "Age should match");
+        softAssert.assertAll();
     }
 
     @Test(description = "Create user with maximum valid age")
@@ -135,15 +140,16 @@ public class CreatePlayerPositiveTests extends BaseTest {
         Response response = PlayerApi.sendCreatePlayerRequest(model);
         Allure.addAttachment("Create Player Full Response", "text/plain", response.statusCode() + "\n" + response.getHeaders().toString() + "\n" + response.asString());
 
+        SoftAssert softAssert = new SoftAssert();
         Allure.step("Step 3: Validate response");
-        Assert.assertEquals(response.statusCode(), 200, "Expected 200 OK for user with maximum valid age");
+        softAssert.assertEquals(response.statusCode(), 200, "Expected 200 OK for user with maximum valid age");
 
         CreatePlayerResponseModel responseModel = response.as(CreatePlayerResponseModel.class);
-        Assert.assertEquals(responseModel.getLogin(), model.getLogin(), "Login should match");
-        Assert.assertEquals(responseModel.getRole(), model.getRole(), "Role should match");
-        Assert.assertEquals(responseModel.getScreenName(), model.getScreenName(), "ScreenName should match");
-        Assert.assertEquals(responseModel.getGender(), model.getGender(), "Gender should match");
-        Assert.assertEquals(responseModel.getAge(), Integer.parseInt(model.getAge()), "Age should match");
+        softAssert.assertEquals(responseModel.getLogin(), model.getLogin(), "Login should match");
+        softAssert.assertEquals(responseModel.getRole(), model.getRole(), "Role should match");
+        softAssert.assertEquals(responseModel.getScreenName(), model.getScreenName(), "ScreenName should match");
+        softAssert.assertEquals(responseModel.getGender(), model.getGender(), "Gender should match");
+        softAssert.assertEquals(responseModel.getAge(), Integer.parseInt(model.getAge()), "Age should match");
         CommonAssertions.validateCreatePlayerResponse(responseModel);
 
         Allure.step("Step 4: Verify player data via GET request");
@@ -152,13 +158,14 @@ public class CreatePlayerPositiveTests extends BaseTest {
 
         Response getResponse = PlayerApi.sendGetPlayerByIdRequest(getRequestModel);
         Allure.addAttachment("Get Player Full Response", "text/plain", getResponse.statusCode() + "\n" + getResponse.getHeaders().toString() + "\n" + getResponse.asString());
-        Assert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player");
+        softAssert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player");
 
         CreatePlayerResponseModel getModel = getResponse.as(CreatePlayerResponseModel.class);
-        Assert.assertEquals(getModel.getLogin(), model.getLogin(), "Login should match");
-        Assert.assertEquals(getModel.getRole(), model.getRole(), "Role should match");
-        Assert.assertEquals(getModel.getScreenName(), model.getScreenName(), "ScreenName should match");
-        Assert.assertEquals(getModel.getGender(), model.getGender(), "Gender should match");
-        Assert.assertEquals(getModel.getAge(), Integer.parseInt(model.getAge()), "Age should match");
+        softAssert.assertEquals(getModel.getLogin(), model.getLogin(), "Login should match");
+        softAssert.assertEquals(getModel.getRole(), model.getRole(), "Role should match");
+        softAssert.assertEquals(getModel.getScreenName(), model.getScreenName(), "ScreenName should match");
+        softAssert.assertEquals(getModel.getGender(), model.getGender(), "Gender should match");
+        softAssert.assertEquals(getModel.getAge(), Integer.parseInt(model.getAge()), "Age should match");
+        softAssert.assertAll();
     }
 }
