@@ -1,8 +1,7 @@
 package com.pavel.qa.tests.player.delete;
 
 import com.pavel.qa.base.BaseTest;
-import com.pavel.qa.models.CreatePlayerRequestModel;
-import com.pavel.qa.models.DeletePlayerRequestModel;
+import com.pavel.qa.models.*;
 import com.pavel.qa.utils.PlayerApi;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
@@ -35,9 +34,10 @@ public class DeletePlayerNegativeTests extends BaseTest {
 
         Response createTargetResponse = PlayerApi.sendCreatePlayerRequest(targetAdmin);
         Allure.addAttachment("Create Target Admin Full Response", "text/plain", createTargetResponse.statusCode() + "\n" + createTargetResponse.getHeaders().toString() + "\n" + createTargetResponse.asString());
-
         softAssert.assertEquals(createTargetResponse.statusCode(), 200, "Target admin creation failed");
-        Long targetPlayerId = createTargetResponse.jsonPath().getLong("id");
+        CreatePlayerResponseModel targetResponseModel = createTargetResponse.as(CreatePlayerResponseModel.class);
+        Long targetPlayerId = targetResponseModel.getId();
+
 
         Allure.step("Step 2: Create second admin to perform deletion");
         CreatePlayerRequestModel editorAdmin = new CreatePlayerRequestModel();

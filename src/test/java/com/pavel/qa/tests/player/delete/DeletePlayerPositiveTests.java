@@ -34,6 +34,8 @@ public class DeletePlayerPositiveTests extends BaseTest {
         userModel.setEditor("supervisor");
 
         Response userCreateResponse = PlayerApi.sendCreatePlayerRequest(userModel);
+        Allure.addAttachment("Create User To Be Deleted Full Response", "text/plain", userCreateResponse.statusCode() + "\n" + userCreateResponse.getHeaders().toString() + "\n" + userCreateResponse.asString());
+
         softAssert.assertEquals(userCreateResponse.statusCode(), 200, "User creation failed");
 
         CreatePlayerResponseModel userResponseModel = userCreateResponse.as(CreatePlayerResponseModel.class);
