@@ -1,5 +1,7 @@
 package com.pavel.qa.utils;
 
+import com.pavel.qa.models.CreatePlayerResponseModel;
+import com.pavel.qa.models.GetPlayerByIdResponseModel;
 import io.qameta.allure.Allure;
 import org.testng.asserts.SoftAssert;
 

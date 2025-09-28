@@ -2,7 +2,7 @@ package com.pavel.qa.tests.player.get;
 
 import com.pavel.qa.base.BaseTest;
 import com.pavel.qa.utils.PlayerApi;
-import com.pavel.qa.utils.GetPlayerByIdRequestModel;
+import com.pavel.qa.models.GetPlayerByIdRequestModel;
 import io.qameta.allure.Allure;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;

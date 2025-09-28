@@ -1,4 +1,4 @@
-package com.pavel.qa.utils;
+package com.pavel.qa.models;
 
 public class GetPlayerByIdRequestModel {
     private Long id;
@@ -10,4 +10,5 @@ public class GetPlayerByIdRequestModel {
     public void setId(Long id) {
         this.id = id;
     }
+
 }

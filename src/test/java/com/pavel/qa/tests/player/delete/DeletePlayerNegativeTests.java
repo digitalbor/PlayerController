@@ -1,6 +1,8 @@
 package com.pavel.qa.tests.player.delete;
 
 import com.pavel.qa.base.BaseTest;
+import com.pavel.qa.models.CreatePlayerRequestModel;
+import com.pavel.qa.models.DeletePlayerRequestModel;
 import com.pavel.qa.utils.*;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;

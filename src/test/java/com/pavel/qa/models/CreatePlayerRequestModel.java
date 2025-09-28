@@ -1,21 +1,21 @@
-package com.pavel.qa.utils;
+package com.pavel.qa.models;
 
-public class GetPlayerByIdResponseModel {
-    private int age;
+public class CreatePlayerRequestModel {
+    private String age;
     private String gender;
-    private Long id;
     private String login;
     private String password;
     private String role;
     private String screenName;
+    private String editor;
 
-    public GetPlayerByIdResponseModel() {}
+    // Getters and setters
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 
@@ -25,14 +25,6 @@ public class GetPlayerByIdResponseModel {
 
     public void setGender(String gender) {
         this.gender = gender;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getLogin() {
@@ -66,5 +58,13 @@ public class GetPlayerByIdResponseModel {
     public void setScreenName(String screenName) {
         this.screenName = screenName;
     }
-}
 
+    public String getEditor() {
+        return editor;
+    }
+
+    public void setEditor(String editor) {
+        this.editor = editor;
+    }
+
+}

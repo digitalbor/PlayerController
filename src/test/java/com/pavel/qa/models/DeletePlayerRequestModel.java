@@ -1,4 +1,4 @@
-package com.pavel.qa.utils;
+package com.pavel.qa.models;
 
 public class DeletePlayerRequestModel {
 

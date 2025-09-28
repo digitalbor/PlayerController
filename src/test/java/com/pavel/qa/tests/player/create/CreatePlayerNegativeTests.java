@@ -1,7 +1,7 @@
 package com.pavel.qa.tests.player.create;
 
 import com.pavel.qa.base.BaseTest;
-import com.pavel.qa.utils.CreatePlayerRequestModel;
+import com.pavel.qa.models.CreatePlayerRequestModel;
 import com.pavel.qa.utils.PlayerApi;
 import com.pavel.qa.utils.TestDataGenerator;
 import io.qameta.allure.*;

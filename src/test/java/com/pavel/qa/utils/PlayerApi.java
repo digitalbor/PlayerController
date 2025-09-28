@@ -1,5 +1,8 @@
 package com.pavel.qa.utils;
 
+import com.pavel.qa.tests.player.models.CreatePlayerRequestModel;
+import com.pavel.qa.tests.player.models.DeletePlayerRequestModel;
+import com.pavel.qa.tests.player.models.GetPlayerByIdRequestModel;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 
@@ -39,7 +42,7 @@ public class PlayerApi {
     public static Response sendGetPlayerByIdRequest(GetPlayerByIdRequestModel model) {
 
         Map<String, String> body = new HashMap<>();
-        body.put("playerId", String.valueOf(model));
+        body.put("playerId", String.valueOf(model.getId()));
 
         return RestAssured
                 .given()
