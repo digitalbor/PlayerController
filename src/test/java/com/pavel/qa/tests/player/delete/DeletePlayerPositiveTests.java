@@ -5,7 +5,7 @@ import com.pavel.qa.utils.*;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;
-import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 import org.testng.annotations.Test;
 
 @Epic("PlayerController")
@@ -35,7 +35,8 @@ public class DeletePlayerPositiveTests extends BaseTest {
                         createResponse.getHeaders().toString() + "\n" +
                         createResponse.asString());
 
-        Assert.assertEquals(createResponse.statusCode(), 200, "User creation failed before deletion");
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(createResponse.statusCode(), 200, "User creation failed before deletion");
         Long playerId = createResponse.jsonPath().getLong("id");
 
         Allure.step("Step 2: Send delete request");
@@ -49,7 +50,7 @@ public class DeletePlayerPositiveTests extends BaseTest {
                         deleteResponse.asString());
 
         Allure.step("Step 3: Validate delete response");
-        Assert.assertEquals(deleteResponse.statusCode(), 204, "Expected 204 NO_CONTENT for successful deletion");
+        softAssert.assertEquals(deleteResponse.statusCode(), 204, "Expected 204 NO_CONTENT for successful deletion");
 
         Allure.step("Step 4: Verify the user does not exist anymore");
         GetPlayerByIdRequestModel getRequestModel = new GetPlayerByIdRequestModel();
@@ -60,7 +61,8 @@ public class DeletePlayerPositiveTests extends BaseTest {
                         getResponse.getHeaders().toString() + "\n" +
                         getResponse.asString());
 
-        Assert.assertEquals(getResponse.statusCode(), 404, "Expected 404 NOT_FOUND for deleted user");
+        softAssert.assertEquals(getResponse.statusCode(), 404, "Expected 404 NOT_FOUND for deleted user");
+        softAssert.assertAll();
     }
 
     @Test(description = "Delete user successfully by admin")
@@ -85,7 +87,8 @@ public class DeletePlayerPositiveTests extends BaseTest {
                         createResponse.getHeaders().toString() + "\n" +
                         createResponse.asString());
 
-        Assert.assertEquals(createResponse.statusCode(), 200, "User creation failed before deletion");
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(createResponse.statusCode(), 200, "User creation failed before deletion");
         Long playerId = createResponse.jsonPath().getLong("id");
 
         Allure.step("Step 2: Send delete request");
@@ -99,7 +102,7 @@ public class DeletePlayerPositiveTests extends BaseTest {
                         deleteResponse.asString());
 
         Allure.step("Step 3: Validate delete response");
-        Assert.assertEquals(deleteResponse.statusCode(), 204, "Expected 204 NO_CONTENT for successful deletion");
+        softAssert.assertEquals(deleteResponse.statusCode(), 204, "Expected 204 NO_CONTENT for successful deletion");
 
         Allure.step("Step 4: Verify the user does not exist anymore");
         GetPlayerByIdRequestModel getRequestModel = new GetPlayerByIdRequestModel();
@@ -110,6 +113,7 @@ public class DeletePlayerPositiveTests extends BaseTest {
                         getResponse.getHeaders().toString() + "\n" +
                         getResponse.asString());
 
-        Assert.assertEquals(getResponse.statusCode(), 404, "Expected 404 NOT_FOUND for deleted user");
+        softAssert.assertEquals(getResponse.statusCode(), 404, "Expected 404 NOT_FOUND for deleted user");
+        softAssert.assertAll();
     }
 }

@@ -1,4 +1,3 @@
-
 package com.pavel.qa.tests.player.get;
 
 import com.pavel.qa.base.BaseTest;
@@ -7,7 +6,7 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;
-import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 import org.testng.annotations.Test;
 
 @Epic("PlayerController")
@@ -32,7 +31,8 @@ public class GetPlayerByIdPositiveTests extends BaseTest {
 
         Response createResponse = PlayerApi.sendCreatePlayerRequest(model);
         Allure.addAttachment("Create Player Full Response", "text/plain", createResponse.statusCode() + "\n" + createResponse.getHeaders().toString() + "\n" + createResponse.asString());
-        Assert.assertEquals(createResponse.statusCode(), 200, "User creation failed before retrieval");
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(createResponse.statusCode(), 200, "User creation failed before retrieval");
 
         Allure.step("Step 2: Retrieve player id");
         Long playerId = createResponse.jsonPath().getLong("id");
@@ -45,14 +45,15 @@ public class GetPlayerByIdPositiveTests extends BaseTest {
 
 
         Allure.step("Step 4: Validate get response");
-        Assert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player request");
+        softAssert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player request");
 
         GetPlayerByIdResponseModel responseModel = getResponse.as(GetPlayerByIdResponseModel.class);
-        Assert.assertEquals(responseModel.getLogin(), model.getLogin(), "Login should match");
-        Assert.assertEquals(responseModel.getRole(), model.getRole(), "Role should match");
-        Assert.assertEquals(responseModel.getScreenName(), model.getScreenName(), "ScreenName should match");
-        Assert.assertEquals(responseModel.getGender(), model.getGender(), "Gender should match");
-        Assert.assertEquals(responseModel.getAge(), Integer.parseInt(model.getAge()), "Age should match");
+        softAssert.assertEquals(responseModel.getLogin(), model.getLogin(), "Login should match");
+        softAssert.assertEquals(responseModel.getRole(), model.getRole(), "Role should match");
+        softAssert.assertEquals(responseModel.getScreenName(), model.getScreenName(), "ScreenName should match");
+        softAssert.assertEquals(responseModel.getGender(), model.getGender(), "Gender should match");
+        softAssert.assertEquals(responseModel.getAge(), Integer.parseInt(model.getAge()), "Age should match");
         CommonAssertions.validateGetPlayerByIdResponse(responseModel);
+        softAssert.assertAll();
     }
 }

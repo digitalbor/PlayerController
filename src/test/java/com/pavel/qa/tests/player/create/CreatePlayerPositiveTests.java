@@ -6,7 +6,6 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;
-import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;

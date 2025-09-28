@@ -7,7 +7,7 @@ import com.pavel.qa.utils.TestDataGenerator;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;
-import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 import org.testng.annotations.Test;
 
 @Epic("PlayerController")
@@ -35,7 +35,9 @@ public class CreatePlayerNegativeTests extends BaseTest {
         Allure.addAttachment("Create Player Full Response", "text/plain", response.statusCode() + "\n" + response.getHeaders().toString() + "\n" + response.asString());
 
         Allure.step("Step 3: Validate response");
-        Assert.assertEquals(response.statusCode(), 400, "Expected 400 BAD_REQUEST for age < 16");
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(response.statusCode(), 400, "Expected 400 BAD_REQUEST for age < 16");
+        softAssert.assertAll();
     }
 
     @Test(description = "Attempt to create player with invalid gender should return 400 BAD_REQUEST")
@@ -57,6 +59,8 @@ public class CreatePlayerNegativeTests extends BaseTest {
         Allure.addAttachment("Create Player Full Response", "text/plain", response.statusCode() + "\n" + response.getHeaders().toString() + "\n" + response.asString());
 
         Allure.step("Step 3: Validate response");
-        Assert.assertEquals(response.statusCode(), 400, "Expected 400 BAD_REQUEST for invalid gender");
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(response.statusCode(), 400, "Expected 400 BAD_REQUEST for invalid gender");
+        softAssert.assertAll();
     }
 }

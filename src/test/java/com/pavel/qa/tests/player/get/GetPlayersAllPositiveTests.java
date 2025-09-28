@@ -1,4 +1,3 @@
-
 package com.pavel.qa.tests.player.get;
 
 import com.pavel.qa.base.BaseTest;
@@ -31,6 +30,7 @@ public class GetPlayersAllPositiveTests extends BaseTest {
         softAssert.assertEquals(getAllResponse.statusCode(), 200, "Expected 200 OK");
 
         CommonAssertions.validateGetAllJsonStructure(getAllResponse);
+        softAssert.assertAll();
     }
 }
 

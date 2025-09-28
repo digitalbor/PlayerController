@@ -7,7 +7,7 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;
-import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -30,6 +30,7 @@ public class GetPlayerByIdNegativeTests extends BaseTest {
     @Story("Negative Test - Invalid playerId")
     @Severity(SeverityLevel.CRITICAL)
     public void getPlayerWithInvalidPlayerId_NegativeTest(Long invalidPlayerId) {
+        SoftAssert softAssert = new SoftAssert();
 
         Allure.step("Step 1: Send get player request with invalid playerId: " + invalidPlayerId);
         GetPlayerByIdRequestModel requestModel = new GetPlayerByIdRequestModel();
@@ -39,8 +40,9 @@ public class GetPlayerByIdNegativeTests extends BaseTest {
         Allure.addAttachment("Get Player Full Response", "text/plain", response.statusCode() + "\n" + response.getHeaders().toString() + "\n" + response.asString());
 
         Allure.step("Step 2: Validate error response");
-        Assert.assertNotEquals(response.statusCode(), 200, "Expected error response for invalid playerId");
-        Assert.assertTrue(response.statusCode() == 400 || response.statusCode() == 404 || response.statusCode() == 403,
+        softAssert.assertNotEquals(response.statusCode(), 200, "Expected error response for invalid playerId");
+        softAssert.assertTrue(response.statusCode() == 400 || response.statusCode() == 404 || response.statusCode() == 403,
                 "Expected 400/403/404 for invalid playerId, but got: " + response.statusCode());
+        softAssert.assertAll();
     }
 }

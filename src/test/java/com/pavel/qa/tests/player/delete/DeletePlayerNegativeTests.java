@@ -1,4 +1,3 @@
-
 package com.pavel.qa.tests.player.delete;
 
 import com.pavel.qa.base.BaseTest;
@@ -6,7 +5,7 @@ import com.pavel.qa.utils.*;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;
-import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 import org.testng.annotations.Test;
 
 @Epic("PlayerController")
@@ -43,7 +42,8 @@ public class DeletePlayerNegativeTests extends BaseTest {
                         createResponse.getHeaders().toString() + "\n" +
                         createResponse.asString());
 
-        Assert.assertEquals(createResponse.statusCode(), 200, "Admin creation failed before deletion attempt");
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(createResponse.statusCode(), 200, "Admin creation failed before deletion attempt");
         Long playerId = createResponse.jsonPath().getLong("id");
 
         Allure.step("Step 2: Attempt to delete admin user using another admin");
@@ -58,6 +58,7 @@ public class DeletePlayerNegativeTests extends BaseTest {
                         deleteResponse.asString());
 
         Allure.step("Step 3: Validate that deletion is forbidden");
-        Assert.assertEquals(deleteResponse.statusCode(), 403, "Expected 403 Forbidden when admin tries to delete another admin");
+        softAssert.assertEquals(deleteResponse.statusCode(), 403, "Expected 403 Forbidden when admin tries to delete another admin");
+        softAssert.assertAll();
     }
 }
