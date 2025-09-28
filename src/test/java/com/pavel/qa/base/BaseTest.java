@@ -8,6 +8,7 @@ import com.pavel.qa.config.EnvironmentConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -24,6 +25,11 @@ public class BaseTest {
         RestAssured.defaultParser = Parser.JSON;
         logger.info("Base URI set to: {}", baseUrl);
 
+
+        File resultsDir = new File("target/allure-results");
+        if (!resultsDir.exists()) {
+            resultsDir.mkdirs(); // creates missed dirs
+        }
 
         try (FileWriter writer = new FileWriter("target/allure-results/environment.properties")) {
             writer.write("Environment=" + env + "\n");
