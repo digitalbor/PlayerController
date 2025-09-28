@@ -19,7 +19,6 @@ public class DeletePlayerPositiveTests extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     public void deleteUserBySupervisor_PositiveTest() {
         Allure.step("Step 1: Create user to be deleted");
-        String editor = "supervisor";
         CreatePlayerRequestModel model = new CreatePlayerRequestModel();
         model.setLogin(TestDataGenerator.generateUniqueLogin());
         model.setScreenName(TestDataGenerator.generateUniqueScreenName());
@@ -27,7 +26,7 @@ public class DeletePlayerPositiveTests extends BaseTest {
         model.setGender(TestDataGenerator.getRandomGender());
         model.setAge(TestDataGenerator.generateValidAge());
         model.setRole("user");
-        model.setEditor(editor);
+        model.setEditor("supervisor");
 
         Response createResponse = PlayerApi.sendCreatePlayerRequest(model);
         Allure.addAttachment("Create Player Full Response", "text/plain",
@@ -41,7 +40,7 @@ public class DeletePlayerPositiveTests extends BaseTest {
 
         Allure.step("Step 2: Send delete request");
         DeletePlayerRequestModel deleteRequest = new DeletePlayerRequestModel();
-        deleteRequest.setEditor(editor);
+        deleteRequest.setEditor("supervisor");
         deleteRequest.setPlayerId(playerId.intValue());
         Response deleteResponse = PlayerApi.sendDeletePlayerRequest(deleteRequest);
         Allure.addAttachment("Delete Player Full Response", "text/plain",
@@ -71,7 +70,6 @@ public class DeletePlayerPositiveTests extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     public void deleteUserByAdmin_PositiveTest() {
         Allure.step("Step 1: Create user to be deleted");
-        String editor = "admin";
         CreatePlayerRequestModel model = new CreatePlayerRequestModel();
         model.setLogin(TestDataGenerator.generateUniqueLogin());
         model.setScreenName(TestDataGenerator.generateUniqueScreenName());
@@ -79,7 +77,7 @@ public class DeletePlayerPositiveTests extends BaseTest {
         model.setGender(TestDataGenerator.getRandomGender());
         model.setAge(TestDataGenerator.generateValidAge());
         model.setRole("user");
-        model.setEditor(editor);
+        model.setEditor("supervisor");
 
         Response createResponse = PlayerApi.sendCreatePlayerRequest(model);
         Allure.addAttachment("Create Player Full Response", "text/plain",
@@ -93,7 +91,7 @@ public class DeletePlayerPositiveTests extends BaseTest {
 
         Allure.step("Step 2: Send delete request");
         DeletePlayerRequestModel deleteRequest = new DeletePlayerRequestModel();
-        deleteRequest.setEditor(editor);
+        deleteRequest.setEditor("admin");
         deleteRequest.setPlayerId(playerId.intValue());
         Response deleteResponse = PlayerApi.sendDeletePlayerRequest(deleteRequest);
         Allure.addAttachment("Delete Player Full Response", "text/plain",

@@ -7,6 +7,7 @@ import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;
 import org.testng.asserts.SoftAssert;
 import org.testng.annotations.Test;
+import com.pavel.qa.utils.TestDataGenerator;
 
 @Epic("PlayerController")
 @Feature("Player Deletion")
@@ -18,23 +19,16 @@ public class DeletePlayerNegativeTests extends BaseTest {
     @Story("Negative Test - Admin cannot delete another admin")
     @Severity(SeverityLevel.CRITICAL)
     public void adminCannotDeleteAnotherAdmin_NegativeTest() {
-        Allure.step("Step 1: Create a second admin user to be deleted");
-        String login = TestDataGenerator.generateUniqueLogin();
-        String screenName = TestDataGenerator.generateUniqueScreenName();
-        String password = TestDataGenerator.generateValidPassword();
-        String gender = TestDataGenerator.getRandomGender();
-        String age = TestDataGenerator.generateValidAge();
-        String role = "admin";
-        String creator = "supervisor"; // only supervisor can create admins
 
+        Allure.step("Step 1: Create user to be deleted");
         CreatePlayerRequestModel model = new CreatePlayerRequestModel();
-        model.setLogin(login);
-        model.setScreenName(screenName);
-        model.setPassword(password);
-        model.setGender(gender);
-        model.setAge(age);
-        model.setRole(role);
-        model.setEditor(creator);
+        model.setLogin(TestDataGenerator.generateUniqueLogin());
+        model.setScreenName(TestDataGenerator.generateUniqueScreenName());
+        model.setPassword(TestDataGenerator.generateValidPassword());
+        model.setGender(TestDataGenerator.getRandomGender());
+        model.setAge(TestDataGenerator.generateValidAge());
+        model.setRole("admin");
+        model.setEditor("supervisor"); // only supervisor can create admins
 
         Response createResponse = PlayerApi.sendCreatePlayerRequest(model);
         Allure.addAttachment("Create Admin Full Response", "text/plain",
