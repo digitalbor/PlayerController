@@ -2,9 +2,7 @@ package com.pavel.qa.tests.player.get;
 
 import com.pavel.qa.base.BaseTest;
 import com.pavel.qa.generators.TestDataGenerator;
-import com.pavel.qa.models.CreatePlayerRequestModel;
-import com.pavel.qa.models.GetPlayerByIdRequestModel;
-import com.pavel.qa.models.GetPlayerByIdResponseModel;
+import com.pavel.qa.models.*;
 import com.pavel.qa.utils.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.*;
@@ -39,7 +37,11 @@ public class GetPlayerByIdPositiveTests extends BaseTest {
         softAssert.assertEquals(createResponse.statusCode(), 200, "User creation failed before retrieval");
 
         Allure.step("Step 2: Retrieve player id");
-        Long playerId = createResponse.jsonPath().getLong("id");
+        //Long playerId = createResponse.jsonPath().getLong("id");
+
+        CreatePlayerResponseModel createResponseModel = createResponse.as(CreatePlayerResponseModel.class);
+        Long playerId = createResponseModel.getId();
+
 
         Allure.step("Step 3: Send get player request");
         GetPlayerByIdRequestModel getRequest = new GetPlayerByIdRequestModel();
