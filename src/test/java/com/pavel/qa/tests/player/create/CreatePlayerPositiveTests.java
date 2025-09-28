@@ -1,11 +1,7 @@
 package com.pavel.qa.tests.player.create;
 
 import com.pavel.qa.base.BaseTest;
-import com.pavel.qa.utils.CommonAssertions;
-import com.pavel.qa.utils.CreatePlayerRequestModel;
-import com.pavel.qa.utils.CreatePlayerResponseModel;
-import com.pavel.qa.utils.PlayerApi;
-import com.pavel.qa.utils.TestDataGenerator;
+import com.pavel.qa.utils.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
@@ -60,7 +56,10 @@ public class CreatePlayerPositiveTests extends BaseTest {
         CommonAssertions.validateCreatePlayerResponse(responseModel);
 
         Allure.step("Step 4: Verify player data via GET request");
-        Response getResponse = PlayerApi.sendGetPlayerByIdRequest((long) responseModel.getId());
+        GetPlayerByIdRequestModel getRequestModel = new GetPlayerByIdRequestModel();
+        getRequestModel.setId(responseModel.getId());
+
+        Response getResponse = PlayerApi.sendGetPlayerByIdRequest(getRequestModel);
         Allure.addAttachment("Get Player Full Response", "text/plain", getResponse.statusCode() + "\n" + getResponse.getHeaders().toString() + "\n" + getResponse.asString());
         Assert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player");
 
@@ -103,7 +102,10 @@ public class CreatePlayerPositiveTests extends BaseTest {
         CommonAssertions.validateCreatePlayerResponse(responseModel);
 
         Allure.step("Step 4: Verify player data via GET request");
-        Response getResponse = PlayerApi.sendGetPlayerByIdRequest((long) responseModel.getId());
+        GetPlayerByIdRequestModel getRequestModel = new GetPlayerByIdRequestModel();
+        getRequestModel.setId(responseModel.getId());
+
+        Response getResponse = PlayerApi.sendGetPlayerByIdRequest(getRequestModel);
         Allure.addAttachment("Get Player Full Response", "text/plain", getResponse.statusCode() + "\n" + getResponse.getHeaders().toString() + "\n" + getResponse.asString());
         Assert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player");
 
@@ -145,7 +147,10 @@ public class CreatePlayerPositiveTests extends BaseTest {
         CommonAssertions.validateCreatePlayerResponse(responseModel);
 
         Allure.step("Step 4: Verify player data via GET request");
-        Response getResponse = PlayerApi.sendGetPlayerByIdRequest((long) responseModel.getId());
+        GetPlayerByIdRequestModel getRequestModel = new GetPlayerByIdRequestModel();
+        getRequestModel.setId(responseModel.getId());
+
+        Response getResponse = PlayerApi.sendGetPlayerByIdRequest(getRequestModel);
         Allure.addAttachment("Get Player Full Response", "text/plain", getResponse.statusCode() + "\n" + getResponse.getHeaders().toString() + "\n" + getResponse.asString());
         Assert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for get player");
 

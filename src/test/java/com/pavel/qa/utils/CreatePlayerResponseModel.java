@@ -1,7 +1,7 @@
 package com.pavel.qa.utils;
 
 public class CreatePlayerResponseModel {
-    private int id;
+    private Long id;
     private int age;
     private String gender;
     private String login;
@@ -11,7 +11,7 @@ public class CreatePlayerResponseModel {
 
     // Getters and setters
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -39,7 +39,7 @@ public class CreatePlayerResponseModel {
         return screenName;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

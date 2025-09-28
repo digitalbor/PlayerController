@@ -1,4 +1,3 @@
-
 package com.pavel.qa.tests.player.get;
 
 import com.pavel.qa.base.BaseTest;
@@ -34,8 +33,9 @@ public class GetPlayerByIdNegativeTests extends BaseTest {
 
         Allure.step("Step 1: Send get player request with invalid playerId: " + invalidPlayerId);
         GetPlayerByIdRequestModel requestModel = new GetPlayerByIdRequestModel();
-        requestModel.setPlayerId(invalidPlayerId);
-        Response response = PlayerApi.sendGetPlayerByIdRequest(requestModel.getPlayerId());
+        requestModel.setId(invalidPlayerId);
+
+        Response response = PlayerApi.sendGetPlayerByIdRequest(requestModel);
         Allure.addAttachment("Get Player Full Response", "text/plain", response.statusCode() + "\n" + response.getHeaders().toString() + "\n" + response.asString());
 
         Allure.step("Step 2: Validate error response");

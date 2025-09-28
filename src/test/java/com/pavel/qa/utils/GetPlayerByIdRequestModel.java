@@ -1,19 +1,13 @@
 package com.pavel.qa.utils;
 
 public class GetPlayerByIdRequestModel {
-    private Long playerId;
+    private Long id;
 
-    public GetPlayerByIdRequestModel() {}
-
-    public GetPlayerByIdRequestModel(Long playerId) {
-        this.playerId = playerId;
+    public Long getId() {
+        return id;
     }
 
-    public Long getPlayerId() {
-        return playerId;
-    }
-
-    public void setPlayerId(Long playerId) {
-        this.playerId = playerId;
+    public void setId(Long playerId) {
+        this.id = id;
     }
 }

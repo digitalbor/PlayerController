@@ -39,8 +39,8 @@ public class GetPlayerByIdPositiveTests extends BaseTest {
 
         Allure.step("Step 3: Send get player request");
         GetPlayerByIdRequestModel getRequest = new GetPlayerByIdRequestModel();
-        getRequest.setPlayerId(playerId);
-        Response getResponse = PlayerApi.sendGetPlayerByIdRequest(getRequest.getPlayerId());
+        getRequest.setId(playerId);
+        Response getResponse = PlayerApi.sendGetPlayerByIdRequest(getRequest);
         Allure.addAttachment("Get Player Full Response", "text/plain", getResponse.statusCode() + "\n" + getResponse.getHeaders().toString() + "\n" + getResponse.asString());
 
 

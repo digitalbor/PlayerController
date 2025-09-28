@@ -1,10 +1,8 @@
+
 package com.pavel.qa.tests.player.delete;
 
 import com.pavel.qa.base.BaseTest;
-import com.pavel.qa.utils.CreatePlayerRequestModel;
-import com.pavel.qa.utils.PlayerApi;
-import com.pavel.qa.utils.TestDataGenerator;
-import io.qameta.allure.Allure;
+import com.pavel.qa.utils.*;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;
@@ -37,16 +35,27 @@ public class DeletePlayerNegativeTests extends BaseTest {
         model.setGender(gender);
         model.setAge(age);
         model.setRole(role);
+        model.setEditor(creator);
 
         Response createResponse = PlayerApi.sendCreatePlayerRequest(model);
-        Allure.addAttachment("Create Admin Response", "text/plain", createResponse.asString());
-        Assert.assertEquals(createResponse.statusCode(), 200, "Admin creation failed before deletion attempt");
+        Allure.addAttachment("Create Admin Full Response", "text/plain",
+                createResponse.statusCode() + "\n" +
+                        createResponse.getHeaders().toString() + "\n" +
+                        createResponse.asString());
 
-        String playerId = createResponse.jsonPath().getString("id");
+        Assert.assertEquals(createResponse.statusCode(), 200, "Admin creation failed before deletion attempt");
+        Long playerId = createResponse.jsonPath().getLong("id");
 
         Allure.step("Step 2: Attempt to delete admin user using another admin");
-        Response deleteResponse = PlayerApi.sendDeletePlayerRequest("admin", playerId);
-        Allure.addAttachment("Delete Attempt Response", "text/plain", deleteResponse.asString());
+        DeletePlayerRequestModel deleteRequest = new DeletePlayerRequestModel();
+        deleteRequest.setEditor("admin");
+        deleteRequest.setPlayerId(playerId.intValue());
+
+        Response deleteResponse = PlayerApi.sendDeletePlayerRequest(deleteRequest);
+        Allure.addAttachment("Delete Attempt Full Response", "text/plain",
+                deleteResponse.statusCode() + "\n" +
+                        deleteResponse.getHeaders().toString() + "\n" +
+                        deleteResponse.asString());
 
         Allure.step("Step 3: Validate that deletion is forbidden");
         Assert.assertEquals(deleteResponse.statusCode(), 403, "Expected 403 Forbidden when admin tries to delete another admin");

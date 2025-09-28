@@ -24,7 +24,7 @@ public class GetPlayersAllPositiveTests extends BaseTest {
         Allure.step("Step 1: Send GET request to /player/get/all");
         Response getAllResponse = PlayerApi.sendGetPlayersAllRequest();
 
-        Allure.addAttachment("Get All Players Response", "application/json", getAllResponse.asString());
+        Allure.addAttachment("Get All Players Full Response", "text/plain", getAllResponse.statusCode() + "\n" + getAllResponse.getHeaders().toString() + "\n" + getAllResponse.asString());
 
         Allure.step("Step 2: Validate response status");
         SoftAssert softAssert = new SoftAssert();
