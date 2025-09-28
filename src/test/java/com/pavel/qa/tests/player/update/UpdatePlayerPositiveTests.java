@@ -42,7 +42,8 @@ public class UpdatePlayerPositiveTests extends BaseTest {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(createResponse.statusCode(), 200, "User creation failed before update");
 
-        Long playerId = createResponse.jsonPath().getLong("id");
+        CreatePlayerResponseModel createResponseModel = createResponse.as(CreatePlayerResponseModel.class);
+        Long playerId = createResponseModel.getId();
 
         Allure.step("Step 2: Prepare update request");
         String updatedScreenName = TestDataGenerator.generateUniqueScreenName();
@@ -55,14 +56,12 @@ public class UpdatePlayerPositiveTests extends BaseTest {
                 updateResponse.statusCode() + "\n" +
                         updateResponse.getHeaders().toString() + "\n" +
                         updateResponse.asString());
-
         softAssert.assertEquals(updateResponse.statusCode(), 200, "Expected 200 OK for successful update");
 
         Allure.step("Step 4: Validate updated response");
         UpdatePlayerResponseModel responseModel = DeserializationUtils.safeDeserialize(updateResponse, UpdatePlayerResponseModel.class);
         softAssert.assertEquals(responseModel.getId(), playerId, "Player ID should match");
         softAssert.assertEquals(responseModel.getScreenName(), updatedScreenName, "ScreenName should be updated");
-
 
         Allure.step("Step 5: Send GET request to verify update");
         GetPlayerByIdRequestModel getRequest = new GetPlayerByIdRequestModel();
@@ -71,8 +70,8 @@ public class UpdatePlayerPositiveTests extends BaseTest {
         Allure.addAttachment("Get Player Full Response", "text/plain", getResponse.statusCode() + "\n" + getResponse.getHeaders().toString() + "\n" + getResponse.asString());
 
         softAssert.assertEquals(getResponse.statusCode(), 200, "Expected 200 OK for GET request");
-        String actualScreenName = getResponse.jsonPath().getString("screenName");
-        softAssert.assertEquals(actualScreenName, updatedScreenName, "ScreenName should match after GET");
+        GetPlayerByIdResponseModel getResponseModel = getResponse.as(GetPlayerByIdResponseModel.class);
+        softAssert.assertEquals(getResponseModel.getScreenName(), updatedScreenName, "ScreenName should match after GET");
 
         softAssert.assertAll();
     }
