@@ -3,7 +3,7 @@ package com.pavel.qa.tests.player.delete;
 import com.pavel.qa.base.BaseTest;
 import com.pavel.qa.models.CreatePlayerRequestModel;
 import com.pavel.qa.models.DeletePlayerRequestModel;
-import com.pavel.qa.utils.*;
+import com.pavel.qa.utils.PlayerApi;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;
@@ -21,40 +21,47 @@ public class DeletePlayerNegativeTests extends BaseTest {
     @Story("Negative Test - Admin cannot delete another admin")
     @Severity(SeverityLevel.CRITICAL)
     public void adminCannotDeleteAnotherAdmin_NegativeTest() {
-
-        Allure.step("Step 1: Create user to be deleted");
-        CreatePlayerRequestModel model = new CreatePlayerRequestModel();
-        model.setLogin(TestDataGenerator.generateUniqueLogin());
-        model.setScreenName(TestDataGenerator.generateUniqueScreenName());
-        model.setPassword(TestDataGenerator.generateValidPassword());
-        model.setGender(TestDataGenerator.getRandomGender());
-        model.setAge(TestDataGenerator.generateValidAge());
-        model.setRole("admin");
-        model.setEditor("supervisor"); // only supervisor can create admins
-
-        Response createResponse = PlayerApi.sendCreatePlayerRequest(model);
-        Allure.addAttachment("Create Admin Full Response", "text/plain",
-                createResponse.statusCode() + "\n" +
-                        createResponse.getHeaders().toString() + "\n" +
-                        createResponse.asString());
-
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(createResponse.statusCode(), 200, "Admin creation failed before deletion attempt");
-        Long playerId = createResponse.jsonPath().getLong("id");
 
-        Allure.step("Step 2: Attempt to delete admin user using another admin");
+        Allure.step("Step 1: Create admin user to be deleted");
+        CreatePlayerRequestModel targetAdmin = new CreatePlayerRequestModel();
+        targetAdmin.setLogin(TestDataGenerator.generateUniqueLogin());
+        targetAdmin.setScreenName(TestDataGenerator.generateUniqueScreenName());
+        targetAdmin.setPassword(TestDataGenerator.generateValidPassword());
+        targetAdmin.setGender(TestDataGenerator.getRandomGender());
+        targetAdmin.setAge(TestDataGenerator.generateValidAge());
+        targetAdmin.setRole("admin");
+        targetAdmin.setEditor("supervisor");
+
+        Response createTargetResponse = PlayerApi.sendCreatePlayerRequest(targetAdmin);
+        Allure.addAttachment("Create Target Admin Full Response", "text/plain", createTargetResponse.statusCode() + "\n" + createTargetResponse.getHeaders().toString() + "\n" + createTargetResponse.asString());
+
+        softAssert.assertEquals(createTargetResponse.statusCode(), 200, "Target admin creation failed");
+        Long targetPlayerId = createTargetResponse.jsonPath().getLong("id");
+
+        Allure.step("Step 2: Create second admin to perform deletion");
+        CreatePlayerRequestModel editorAdmin = new CreatePlayerRequestModel();
+        editorAdmin.setLogin(TestDataGenerator.generateUniqueLogin());
+        editorAdmin.setScreenName(TestDataGenerator.generateUniqueScreenName());
+        editorAdmin.setPassword(TestDataGenerator.generateValidPassword());
+        editorAdmin.setGender(TestDataGenerator.getRandomGender());
+        editorAdmin.setAge(TestDataGenerator.generateValidAge());
+        editorAdmin.setRole("admin");
+        editorAdmin.setEditor("supervisor");
+
+        Response createEditorResponse = PlayerApi.sendCreatePlayerRequest(editorAdmin);
+        Allure.addAttachment("Create Editor Admin Full Response", "text/plain", createEditorResponse.statusCode() + "\n" + createEditorResponse.getHeaders().toString() + "\n" + createEditorResponse.asString());
+        softAssert.assertEquals(createEditorResponse.statusCode(), 200, "Editor admin creation failed");
+        String editorLogin = editorAdmin.getLogin();
+
+        Allure.step("Step 3: Attempt to delete target admin using editor admin");
         DeletePlayerRequestModel deleteRequest = new DeletePlayerRequestModel();
-        deleteRequest.setEditor("admin");
-        deleteRequest.setPlayerId(playerId.intValue());
+        deleteRequest.setPlayerId(targetPlayerId.intValue());
 
-        Response deleteResponse = PlayerApi.sendDeletePlayerRequest(deleteRequest);
-        Allure.addAttachment("Delete Attempt Full Response", "text/plain",
-                deleteResponse.statusCode() + "\n" +
-                        deleteResponse.getHeaders().toString() + "\n" +
-                        deleteResponse.asString());
-
-        Allure.step("Step 3: Validate that deletion is forbidden");
+        Response deleteResponse = PlayerApi.sendDeletePlayerRequest(editorLogin, deleteRequest);
+        Allure.addAttachment("Delete Attempt Full Response", "text/plain", deleteResponse.statusCode() + "\n" + deleteResponse.getHeaders().toString() + "\n" + deleteResponse.asString());
         softAssert.assertEquals(deleteResponse.statusCode(), 403, "Expected 403 Forbidden when admin tries to delete another admin");
+
         softAssert.assertAll();
     }
 }
