@@ -10,6 +10,7 @@ public class UpdatePlayerRequestModel {
     private String editor;
     private Long playerId;
 
+    // Getters and setters
 
     public Integer getAge() {
         return age;
@@ -58,7 +59,6 @@ public class UpdatePlayerRequestModel {
     public void setScreenName(String screenName) {
         this.screenName = screenName;
     }
-
 
     public String getEditor() {
         return editor;

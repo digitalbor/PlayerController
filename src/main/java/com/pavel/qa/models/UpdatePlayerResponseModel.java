@@ -8,6 +8,8 @@ public class UpdatePlayerResponseModel {
     private String role;
     private String screenName;
 
+    // Getters and setters
+
     public Integer getAge() {
         return age;
     }

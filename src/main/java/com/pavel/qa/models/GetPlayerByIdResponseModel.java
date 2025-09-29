@@ -9,7 +9,7 @@ public class GetPlayerByIdResponseModel {
     private String role;
     private String screenName;
 
-    public GetPlayerByIdResponseModel() {}
+    // Getters and setters
 
     public int getAge() {
         return age;
