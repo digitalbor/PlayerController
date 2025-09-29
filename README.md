@@ -8,6 +8,10 @@ This project contains automated API tests for the PlayerController service. It v
 
 You can run the tests using Maven from the command line. The base URL can be configured either directly or via environment name.
 
+### Run with default command (default test suite and env will be used):
+
+mvn clean test
+
 ### Run with environment name:
 
 mvn clean test -Denv=qa
