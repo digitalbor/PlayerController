@@ -27,11 +27,16 @@ mvn clean test -Denv=stage -DbaseUrl=https://custom.api.com
 ## Project Structure
 
 com.pavel.qa.tests — Test classes (positive and negative scenarios)
+
 com.pavel.qa.models — Request and response models
+
 com.pavel.qa.utils — API wrappers and utilities
+
 com.pavel.qa.config — Environment configuration
+
 com.pavel.qa.base.BaseTest — Base test setup
-testng.xml - Manage thread-count, tests and test suites
+
+testng.xml — Manage thread-count, tests and test suites
 
 ## Dependencies
 
