@@ -25,7 +25,7 @@ public class PlayerApi {
 
 
 
-    public static Response sendDeletePlayerRequest(String editorLogin, DeletePlayerRequestModel model) {
+    public static Response sendDeletePlayerRequest(DeletePlayerRequestModel model) {
         Map<String, Integer> body = new HashMap<>();
         body.put("playerId", model.getPlayerId());
 
@@ -34,7 +34,7 @@ public class PlayerApi {
                 .header("accept", "*/*")
                 .header("Content-Type", "application/json")
                 .body(body)
-                .delete("/player/delete/" + editorLogin);
+                .delete("/player/delete/" + model.getEditor());
     }
 
 

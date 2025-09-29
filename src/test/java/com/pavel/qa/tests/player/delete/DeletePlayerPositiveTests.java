@@ -61,8 +61,9 @@ public class DeletePlayerPositiveTests extends BaseTest {
         Allure.step("Step 3: Send delete request using admin login");
         DeletePlayerRequestModel deleteRequest = new DeletePlayerRequestModel();
         deleteRequest.setPlayerId(playerId.intValue());
+        deleteRequest.setEditor(adminModel.getLogin());
 
-        Response deleteResponse = PlayerApi.sendDeletePlayerRequest(editorLogin, deleteRequest);
+        Response deleteResponse = PlayerApi.sendDeletePlayerRequest(deleteRequest);
         Allure.addAttachment("Delete Player Full Response", "text/plain", deleteResponse.statusCode() + "\n" + deleteResponse.getHeaders().toString() + "\n" + deleteResponse.asString());
         softAssert.assertTrue(deleteResponse.statusCode() == 200 || deleteResponse.statusCode() == 204, "Expected status code 200 OK or 204 NO_CONTENT for successful deletion");
 

@@ -5,6 +5,8 @@ public class DeletePlayerRequestModel {
         private int playerId;
         private String editor;
 
+        // Getters and setters
+
         public int getPlayerId() {
             return playerId;
         }

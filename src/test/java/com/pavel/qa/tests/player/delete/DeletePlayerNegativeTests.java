@@ -57,8 +57,9 @@ public class DeletePlayerNegativeTests extends BaseTest {
         Allure.step("Step 3: Attempt to delete target admin using editor admin");
         DeletePlayerRequestModel deleteRequest = new DeletePlayerRequestModel();
         deleteRequest.setPlayerId(targetPlayerId.intValue());
+        deleteRequest.setEditor(deleteRequest.getEditor());
 
-        Response deleteResponse = PlayerApi.sendDeletePlayerRequest(editorLogin, deleteRequest);
+        Response deleteResponse = PlayerApi.sendDeletePlayerRequest(deleteRequest);
         Allure.addAttachment("Delete Attempt Full Response", "text/plain", deleteResponse.statusCode() + "\n" + deleteResponse.getHeaders().toString() + "\n" + deleteResponse.asString());
         softAssert.assertEquals(deleteResponse.statusCode(), 403, "Expected 403 Forbidden when admin tries to delete another admin");
 
