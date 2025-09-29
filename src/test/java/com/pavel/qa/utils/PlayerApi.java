@@ -54,13 +54,13 @@ public class PlayerApi {
     }
 
 
-    public static Response sendUpdatePlayerRequest(String editor, Long id, UpdatePlayerRequestModel model) {
+    public static Response sendUpdatePlayerRequest(UpdatePlayerRequestModel model) {
         return RestAssured
                 .given()
                 .header("accept", "*/*")
                 .header("Content-Type", "application/json")
                 .body(model)
-                .patch("/player/update/" + editor + "/" + id);
+                .patch("/player/update/" + model.getEditor() + "/" + model.getPlayerId());
     }
 
 

@@ -7,6 +7,9 @@ public class UpdatePlayerRequestModel {
     private String password;
     private String role;
     private String screenName;
+    private String editor;
+    private Long playerId;
+
 
     public Integer getAge() {
         return age;
@@ -54,6 +57,23 @@ public class UpdatePlayerRequestModel {
 
     public void setScreenName(String screenName) {
         this.screenName = screenName;
+    }
+
+
+    public String getEditor() {
+        return editor;
+    }
+
+    public void setEditor(String editor) {
+        this.editor = editor;
+    }
+
+    public Long getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(Long playerId) {
+        this.playerId = playerId;
     }
 
 }

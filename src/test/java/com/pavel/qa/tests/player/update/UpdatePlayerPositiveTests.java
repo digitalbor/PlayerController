@@ -31,7 +31,7 @@ public class UpdatePlayerPositiveTests extends BaseTest {
         createModel.setGender(TestDataGenerator.getRandomGender());
         createModel.setAge(TestDataGenerator.generateValidAge());
         createModel.setRole("user");
-        createModel.setEditor(editor);
+        createModel.setEditor("supervisor");
 
         Response createResponse = PlayerApi.sendCreatePlayerRequest(createModel);
         Allure.addAttachment("Create Player Full Response", "text/plain",
@@ -49,9 +49,11 @@ public class UpdatePlayerPositiveTests extends BaseTest {
         String updatedScreenName = TestDataGenerator.generateUniqueScreenName();
         UpdatePlayerRequestModel updateModel = new UpdatePlayerRequestModel();
         updateModel.setScreenName(updatedScreenName);
+        updateModel.setEditor(editor);
+        updateModel.setPlayerId(playerId);
 
         Allure.step("Step 3: Send update request");
-        Response updateResponse = PlayerApi.sendUpdatePlayerRequest(editor, playerId, updateModel);
+        Response updateResponse = PlayerApi.sendUpdatePlayerRequest(updateModel);
         Allure.addAttachment("Update Player Full Response", "text/plain",
                 updateResponse.statusCode() + "\n" +
                         updateResponse.getHeaders().toString() + "\n" +

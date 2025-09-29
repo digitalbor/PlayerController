@@ -45,10 +45,12 @@ public class UpdatePlayerNegativeTests extends BaseTest {
 
         Allure.step("Step 2: Prepare update request with empty screenName");
         UpdatePlayerRequestModel updateModel = new UpdatePlayerRequestModel();
-        updateModel.setScreenName(""); // Invalid empty screenName
+        updateModel.setScreenName("");// Invalid empty screenName
+        updateModel.setEditor(editor);
+        updateModel.setPlayerId(playerId);
 
         Allure.step("Step 3: Send update request");
-        Response updateResponse = PlayerApi.sendUpdatePlayerRequest(editor, playerId, updateModel);
+        Response updateResponse = PlayerApi.sendUpdatePlayerRequest(updateModel);
         Allure.addAttachment("Update Player Full Response", "text/plain",
                 updateResponse.statusCode() + "\n" +
                         updateResponse.getHeaders().toString() + "\n" +
